@@ -17,7 +17,7 @@
 #**  Makefile for the compilation of the executable
 #**************************************************************#
 
-CC := g++
+CXX := g++
 
 TARGET := woof
 TEST_TARGET := unit_tests
@@ -29,20 +29,20 @@ W += -Wuninitialized -Wmaybe-uninitialized
 DEBUG := -g -ggdb3
 
 CPPFLAGS := -I ./include/
-LDFLAGS := -L ./lib/ -lmy -lpcre
-CFLAGS := $(W)
+LDFLAGS := -L ./lib/ -lmy -lSDL2 -lGL -lGLU -ldl
+CXXFLAGS := $(W)
 
 ifeq ($(d), t)
-	CFLAGS := $(DEBUG)
+	CXXFLAGS := $(DEBUG)
 else ifeq ($(d), o)
-	CFLAGS += -O1
+	CXXFLAGS += -O1
 endif
 
 GLOBAL :=		main.cpp
 
 FILES := $(GLOBAL)
 SRC := $(addprefix src/, $(FILES))
-OBJ := $(SRC:%.c=$(BUILD_DIR)/%.o)
+OBJ := $(SRC:%.cpp=$(BUILD_DIR)/%.o)
 
 TEST_OBJ := $(filter-out $(BUILD_DIR)/src/main.o, $(OBJ))
 
@@ -50,11 +50,11 @@ all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	@make -C lib/my --no-print-directory d=$(d)
-	@$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
-$(BUILD_DIR)/%.o: %.c
+$(BUILD_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -c -o $@ $^
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) -c -o $@ $^
 
 lib:
 	@rm -f $(TARGET)

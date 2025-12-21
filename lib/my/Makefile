@@ -17,7 +17,7 @@
 #**  Makefile for the compilation of the lib
 #**************************************************************#
 
-CC := g++
+CXX := g++
 
 TARGET := libmy.a
 BUILD_DIR := .obj
@@ -29,16 +29,16 @@ DEBUG := -g -ggdb3
 
 CPPFLAGS := -I ../../include/
 LDFLAGS := -lm
-CFLAGS := $(W)
+CXXFLAGS := $(W)
 
 ifeq ($(d), t)
-	CFLAGS := $(DEBUG)
+	CXXFLAGS := $(DEBUG)
 else ifeq ($(d), o)
-	CFLAGS += -O1
+	CXXFLAGS += -O1
 endif
 
 SRC := 
-OBJ := $(SRC:%.c=$(BUILD_DIR)/%.o)
+OBJ := $(SRC:%.cpp=$(BUILD_DIR)/%.o)
 
 all: $(TARGET)
 
@@ -46,9 +46,9 @@ $(TARGET): $(OBJ)
 	@ar rc $@ $^
 	@mv $@ ../
 
-$(BUILD_DIR)/%.o: %.c
+$(BUILD_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -c -o $@ $^
+	$(CC) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) -c -o $@ $^
 
 clean:
 	@rm -rf $(BUILD_DIR)
