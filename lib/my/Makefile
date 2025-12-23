@@ -37,7 +37,27 @@ else ifeq ($(d), o)
 	CXXFLAGS += -O1
 endif
 
-SRC := 
+STRING := 	string/retrive/strlen.cpp
+
+WRITE := 	write/putchar.cpp \
+			write/putstr.cpp \
+        	write/putnbr.cpp \
+			write/putnbr_base.cpp \
+			write/edit_ouput/color/back_color.cpp \
+			write/edit_ouput/color/back_color_rgb.cpp \
+			write/edit_ouput/color/color_rgb.cpp \
+			write/edit_ouput/color/color.cpp \
+			write/edit_ouput/style/strong.cpp \
+			write/edit_ouput/reset.cpp
+
+ERROR :=	error/error_dispatch.cpp \
+			error/error_print.cpp \
+			error/error_prog.cpp \
+			error/error_custom.cpp \
+			error/error_system.cpp
+
+SRC := $(STRING) $(WRITE)
+SRC += $(ERROR)
 OBJ := $(SRC:%.cpp=$(BUILD_DIR)/%.o)
 
 all: $(TARGET)
