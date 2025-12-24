@@ -29,7 +29,7 @@ W += -Wuninitialized -Wmaybe-uninitialized
 DEBUG := -g -ggdb3
 
 CPPFLAGS := -I ./include/
-LDFLAGS := -L ./lib/ -lmy -lSDL2 -lGL -lGLU -ldl
+LDFLAGS := -L ./lib/ -lmy -lSDL2 -lSDL2_ttf -lGL -lGLU -ldl -lfmt
 CXXFLAGS := $(W)
 
 ifeq ($(d), t)

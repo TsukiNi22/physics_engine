@@ -24,10 +24,11 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include <stddef.h>     // size_t
-    #include <stdbool.h>    // boolean
-    #include <vector>       // vector
-    #include <SDL2/SDL.h>   // SDL_Window
+    #include <stddef.h>         // size_t
+    #include <stdbool.h>        // boolean
+    #include <vector>           // vector
+    #include <SDL2/SDL.h>       // SDL_Window
+    #include <SDL2/SDL_ttf.h>   // TTF_Font
 
     /* function/class */
     #include "stack.hpp"    // Stack, resolve
@@ -44,11 +45,16 @@ File Description:
     /* window */
     #define DEFAULT_WIDTH 800
     #define DEFAULT_HEIGHT 600
+    #define DEFAULT_WORLD_WIDTH 800
+    #define DEFAULT_WORLD_HEIGHT 600
     
     /* simulation */
     #define DEFAULT_FPS 30 // max: 1000
     #define FPS_UPDATE_MILLISECONDS 100
     #define INTERRUPT_WAITING_MILLISECONDS 10
+
+    /* assets */
+    #define FONT_ARIAL "assets/font/Arial.ttf"
 
 //----------------------------------------------------------------//
 /* TYPEDEF */
@@ -65,6 +71,8 @@ class Engine {
         SDL_Window *window = nullptr;
         SDL_GLContext glContext;
         std::atomic<bool> closing{false};
+        TTF_Font* font = nullptr;
+        bool debug_display = false;
 
         // Simulation
         Stack *stack = nullptr;
@@ -83,10 +91,15 @@ class Engine {
         void destroy_window_context();
         void event();
 
+        /* drawing */
+        int draw_text(const char * const text, float scale, float x, float y);
+        void debug_draw();
     public:
         // Window
         size_t width = DEFAULT_WIDTH;
         size_t height = DEFAULT_HEIGHT;
+        float area_width = DEFAULT_WORLD_WIDTH;
+        float area_height = DEFAULT_WORLD_HEIGHT;
         bool resizable = false;
 
         // Simulation
