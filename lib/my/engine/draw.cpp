@@ -1,0 +1,178 @@
+/**************************************************************\
+
+ ██╗  ██╗ █████╗ ██████╗ ████████╗ █████╗ ███╗   ██╗██╗ █████╗ 
+ ╚██╗██╔╝██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗████╗  ██║██║██╔══██╗
+  ╚███╔╝ ███████║██████╔╝   ██║   ███████║██╔██╗ ██║██║███████║
+  ██╔██╗ ██╔══██║██╔══██╗   ██║   ██╔══██║██║╚██╗██║██║██╔══██║
+ ██╔╝ ██╗██║  ██║██║  ██║   ██║   ██║  ██║██║ ╚████║██║██║  ██║
+ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
+
+Edition:
+##  @date 24/12/2025 by @authorTsukini
+
+File Name:
+##  @file draw.cpp
+
+File Description:
+##  Pre made draw function
+\**************************************************************/
+
+#include "object.hpp"
+#include "woof.hpp"
+#include "error.hpp"
+#include <string>
+#include <fmt/core.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+
+int Engine::draw_text(const char * const text, float scale, float x, float y)
+{
+    // Create the style for the text
+    SDL_Color white = {255, 255, 255, 255};
+    SDL_Surface* surf = TTF_RenderText_Blended(font, text, white);
+    if (!surf) return err_custom("Error during the creation of the text surface", KO, ERR_INFO);
+
+    // Convertion of the text into an openGL texture
+    SDL_Surface* formatted_surf = SDL_ConvertSurfaceFormat(surf, SDL_PIXELFORMAT_RGBA32, 0);
+    SDL_FreeSurface(surf);
+    surf = formatted_surf;
+
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surf->w, surf->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surf->pixels);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // Drawing
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    float scale_x = area_width / width;
+    float scale_y = area_height / height;
+
+    float text_w = surf->w * scale_x * scale;
+    float text_h = surf->h * scale_y * scale;
+
+    glBegin(GL_QUADS);
+        glTexCoord2f(0, 0); glVertex2f(x, y);
+        glTexCoord2f(1, 0); glVertex2f(x + text_w, y);
+        glTexCoord2f(1, 1); glVertex2f(x + text_w, y - text_h);
+        glTexCoord2f(0, 1); glVertex2f(x, y - text_h);
+    glEnd();
+
+    glDisable(GL_BLEND);
+    glDisable(GL_TEXTURE_2D);
+
+    // Clear used ressources
+    SDL_FreeSurface(surf);
+    glDeleteTextures(1, &texture);
+
+    return OK;
+}
+
+static void draw_shape(const std::vector<vector2>& v)
+{
+    if (v.size() < 2) return;
+
+    glBegin(GL_LINE_LOOP);
+        for (const auto& p : v)
+            glVertex2f(p.x, p.y);
+    glEnd();
+}
+
+static void draw_point(const std::vector<vector2>& v)
+{
+    if (v.size() != 1) return;
+
+    glBegin(GL_POINTS);
+        glVertex2f(v[0].x, v[0].y);
+    glEnd();
+}
+
+static void draw_line(const std::vector<vector2>& v)
+{
+    if (v.size() != 2) return;
+
+    glBegin(GL_LINES);
+        glVertex2f(v[0].x, v[0].y);
+        glVertex2f(v[1].x, v[1].y);
+    glEnd();
+}
+
+static void draw_triangle(const std::vector<vector2>& v)
+{
+    if (v.size() != 3) return;
+
+    glBegin(GL_TRIANGLES);
+        for (const auto& p : v)
+            glVertex2f(p.x, p.y);
+    glEnd();
+}
+
+static void draw_rectangle(const std::vector<vector2>& v)
+{
+    if (v.size() != 4) return;
+
+    glBegin(GL_QUADS);
+        for (const auto& p : v)
+            glVertex2f(p.x, p.y);
+    glEnd();
+}
+
+static void draw_circle(const std::vector<vector2>& v, int segments = CIRCLE_RESOLUTION)
+{
+    if (v.size() != 2) return;
+
+    const vector2& center = v[0];
+    float radius = v[1].x;
+
+    glBegin(GL_LINE_LOOP);
+        for (int i = 0; i < segments; ++i) {
+            float angle = 2.0f * M_PI * i / segments;
+            glVertex2f(
+                center.x + std::cos(angle) * radius,
+                center.y + std::sin(angle) * radius
+            );
+        }
+    glEnd();
+}
+
+static void draw_object_dispatch(type_t id, const std::vector<vector2>& vectors)
+{
+    switch (id) {
+        case POINT:     draw_point(vectors);     break;
+        case LINE:      draw_line(vectors);      break;
+        case TRIANGLE:  draw_triangle(vectors);  break;
+        case RECTANGLE: draw_rectangle(vectors); break;
+        case CIRCLE:    draw_circle(vectors);    break;
+        case SHAPE:     draw_shape(vectors);     break;
+        default: break; // Ignore SPRITE for now
+    }
+}
+
+void Engine::draw_actor(const Actor * const actor)
+{
+    draw_object_dispatch(actor->id, actor->vectors);
+}
+
+void Engine::draw_object(const Object * const object)
+{
+    draw_object_dispatch(object->id, object->vectors);
+}
+
+void Engine::draw_prop(const Prop * const prop)
+{
+    draw_object_dispatch(prop->id, prop->vectors);
+}
+
+void Engine::debug_draw()
+{
+    std::string fps_debug_string = fmt::format("fps: {:.2f}", real_fps.load());
+    const char * const fps_debug = fps_debug_string.c_str();
+    draw_text(fps_debug, 1.25f, area_width / -2.f + 10.f, area_height / 2.f - 10.f);
+}
