@@ -37,7 +37,10 @@ else ifeq ($(d), o)
 	CXXFLAGS += -O1
 endif
 
-ENGINE := 	engine/thread.cpp
+ENGINE := 	engine/thread.cpp \
+			engine/stack.cpp \
+			engine/constructor.cpp \
+			engine/destructor.cpp
 
 STRING := 	string/retrive/strlen.cpp
 

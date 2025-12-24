@@ -25,8 +25,8 @@ File Description:
 
     /* type */
     #include <stdbool.h>    // boolean
-    #include "woof.hpp"     // engine_c
-    class engine_c;
+    #include "woof.hpp"     // Engine
+    class Engine;
     
     //----------------------------------------------------------------//
     /* TYPEDEF */
@@ -47,52 +47,52 @@ typedef struct vector3_s {
 } vector3;
 
 /* actor */
-typedef class actor_c {
+class Actor {
     private:
-        engine_c *engine = nullptr;
+        Engine *engine = nullptr;
         vector2 position{0.f, 0.f};
 
     public:
         // Constructor
-        actor_c() {} // Default
-        actor_c(float x, float y) : position{x, y} {} // Position
+        Actor() {} // Default
+        Actor(float x, float y) : position{x, y} {} // Position
         
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
-        int set_engine(engine_c *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
-} Actor;
+        int set_engine(Engine *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
+};
 
 /* object */
-typedef class object_c {
+class Object {
     private:
-        engine_c *engine = nullptr;
+        Engine *engine = nullptr;
         vector2 position{0.f, 0.f};
 
     public:
         // Constructor
-        object_c() {} // Default
-        object_c(float x, float y) : position{x, y} {} // Position
+        Object() {} // Default
+        Object(float x, float y) : position{x, y} {} // Position
         
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
-        int set_engine(engine_c *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
-} Object;
+        int set_engine(Engine *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
+};
 
 /* prop */
-typedef class prop_c {
+class Prop {
     private:
-        engine_c *engine = nullptr;
+        Engine *engine = nullptr;
         vector2 position{0.f, 0.f};
 
     public:
         // Constructor
-        prop_c() {} // Default
-        prop_c(float x, float y) : position{x, y} {} // Position
+        Prop() {} // Default
+        Prop(float x, float y) : position{x, y} {} // Position
         
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
-        int set_engine(engine_c *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
-} Prop;
+        int set_engine(Engine *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
+};
 
 #endif /* OBJECT_H */
 

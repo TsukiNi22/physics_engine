@@ -29,7 +29,10 @@ File Description:
     #include <vector>       // vector
     
     /* function/class */
+    #include "stack.hpp"    // Stack, resolve
+    class Stack;
     #include "object.hpp"   // Actor, Object, Prop
+    class Actor; class Object; class Prop;
     #include <algorithm>    // remove
     #include <atomic>       // atomic
 
@@ -50,7 +53,7 @@ File Description:
 /* TYPEDEF */
 
 /* engine */
-typedef class engine_c {
+class Engine {
     private:
         // Content to simulate
         std::vector<Actor*> actors;
@@ -58,6 +61,7 @@ typedef class engine_c {
         std::vector<Prop*> props;
 
         // Simulation
+        Stack *stack = nullptr;
         std::atomic<bool> running{false}; // Thread status
         std::atomic<bool> interrupted{true}; // Thread aimed status
         size_t frame = 0; // Actual frame
@@ -81,7 +85,8 @@ typedef class engine_c {
         void interrupt();
 
         // ----------- Function ----------- //
-        
+        void resolve_stack();
+
         /* add */
         // Can only be done when the engine is interrupted
         int add_actor(Actor * const actor)     {if (running || actor->has_engine()) return KO; actor->set_engine(this); actors.push_back(actor); return OK;}
@@ -95,13 +100,13 @@ typedef class engine_c {
         int remove_prop(Prop * const prop)         {if (running) return KO; props.erase(std::remove(props.begin(), props.end(), prop), props.end()); return OK;}
 
         // ---------- Constructor --------- //
-        engine_c() {} // Default
-        engine_c(bool is_resizable) : resizable(is_resizable) {} // Screen status
-        engine_c(size_t default_width, size_t default_height) : width(default_width), height(default_height) {} // Screen dimension
-        engine_c(size_t default_width, size_t default_height, bool is_resizable) : width(default_width), height(default_height), resizable(is_resizable) {} // Screen dimension + Screen status
+        Engine(); // Default
+        Engine(bool is_resizable); // Screen status
+        Engine(size_t default_width, size_t default_height); // Screen dimension
+        Engine(size_t default_width, size_t default_height, bool is_resizable); // Screen dimension + Screen status
 
         // ----------- Destructor --------- //
-        ~engine_c() {interrupt();}
-} Engine;
+        ~Engine(); // Default
+};
 
 #endif /* WOOF_H */
