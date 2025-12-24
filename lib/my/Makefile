@@ -37,6 +37,8 @@ else ifeq ($(d), o)
 	CXXFLAGS += -O1
 endif
 
+ENGINE := 	engine/thread.cpp
+
 STRING := 	string/retrive/strlen.cpp
 
 WRITE := 	write/putchar.cpp \
@@ -56,7 +58,8 @@ ERROR :=	error/error_dispatch.cpp \
 			error/error_custom.cpp \
 			error/error_system.cpp
 
-SRC := $(STRING) $(WRITE)
+SRC := $(ENGINE)
+SRC += $(STRING) $(WRITE)
 SRC += $(ERROR)
 OBJ := $(SRC:%.cpp=$(BUILD_DIR)/%.o)
 
