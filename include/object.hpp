@@ -67,7 +67,8 @@ class Actor {
         // Shape
         type_t id;
         std::vector<vector2> vectors;
-        
+        float rotation = 0.f;
+
         // Status
         std::atomic<bool> hitbox = true;
         std::atomic<bool> input = true;
@@ -82,6 +83,7 @@ class Actor {
         
         // Constructor
         Actor(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
+        Actor(type_t type, std::vector<vector2> data, float deg) : id(type), vectors(data), rotation(deg) {} // Default
         
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
@@ -115,7 +117,7 @@ class Object {
                
         // Constructor
         Object(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
-        Object(type_t type, std::vector<vector2> data, float deg) : id(type), vectors(data), rotation(def % 360) {} // Default
+        Object(type_t type, std::vector<vector2> data, float deg) : id(type), vectors(data), rotation(deg) {} // Default
         
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
@@ -134,7 +136,7 @@ class Prop {
         // Shape
         type_t id;
         std::vector<vector2> vectors;
-        float rotation 0.f;
+        float rotation = 0.f;
  
         // Status
         std::atomic<bool> hitbox = true;
@@ -148,7 +150,7 @@ class Prop {
         
         // Constructor
         Prop(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
-        Prop(type_t type, std::vector<vector2> data, float deg) : id(type), vectors(data), rotation(def % 360) {} // Default
+        Prop(type_t type, std::vector<vector2> data, float deg) : id(type), vectors(data), rotation(deg) {} // Default
         
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}

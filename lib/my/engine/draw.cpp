@@ -163,7 +163,7 @@ void Engine::draw_actor(const Actor * const actor)
 
 void Engine::draw_object(const Object * const object)
 {
-    if (!actor->rendered) return;
+    if (!object->rendered) return;
     draw_object_dispatch(object->id, object->vectors);
 }
 
