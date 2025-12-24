@@ -64,6 +64,7 @@ class Engine {
         // window
         SDL_Window *window = nullptr;
         SDL_GLContext glContext;
+        std::atomic<bool> closing{false};
 
         // Simulation
         Stack *stack = nullptr;
@@ -78,9 +79,9 @@ class Engine {
         
         /* window */
         int init(); // Error: KO
-        void destroy();
         int setup_window_context();
         void destroy_window_context();
+        void event();
 
     public:
         // Window
@@ -93,6 +94,7 @@ class Engine {
         std::atomic<float> real_fps = -1.f;
        
         // --------- Pre-Function --------- //
+        int destroy(bool failsafe);
         int start(); // Error: KO
         void interrupt();
         void pause();

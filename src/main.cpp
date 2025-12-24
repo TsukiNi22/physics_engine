@@ -29,9 +29,8 @@ int main() {
     engine.pause();
     std::cout << "Pause" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(1)); // Wainting
-    std::cout << "Play" << std::endl;
     engine.play();
+    std::cout << "Play" << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(3)); // Keep the engine alive for x time
-    engine.interrupt();
     return 0;
 }
