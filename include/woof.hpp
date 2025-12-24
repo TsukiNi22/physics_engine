@@ -53,6 +53,9 @@ File Description:
     #define FPS_UPDATE_MILLISECONDS 100
     #define INTERRUPT_WAITING_MILLISECONDS 10
 
+    /* render */
+    #define CIRCLE_RESOLUTION 32
+
     /* assets */
     #define FONT_ARIAL "assets/font/Arial.ttf"
 
@@ -92,9 +95,18 @@ class Engine {
         void event();
 
         /* drawing */
-        int draw_text(const char * const text, float scale, float x, float y);
         void debug_draw();
+        int draw_text(const char * const text, float scale, float x, float y);
+        void draw_actor(const Actor * const actor);
+        void draw_object(const Object * const object);
+        void draw_prop(const Prop * const prop);
+    
+        /* simulate */
+        void physics_actor(const Actor * const actor);
+        void physics_object(const Object * const object);
     public:
+        bool alive = false;
+        
         // Window
         size_t width = DEFAULT_WIDTH;
         size_t height = DEFAULT_HEIGHT;
@@ -107,26 +119,27 @@ class Engine {
         std::atomic<float> real_fps = -1.f;
        
         // --------- Pre-Function --------- //
-        int destroy(bool failsafe);
+        /* window */
+        int destroy(bool failsafe); // Error: KO
         int start(); // Error: KO
         void interrupt();
         void pause();
         void play();
-
-        // ----------- Function ----------- //
+        
+        /* stack */
         void resolve_stack();
 
         /* add */
         // Can only be done when the engine is interrupted
-        int add_actor(Actor * const actor)     {if (running || actor->has_engine()) return KO; actor->set_engine(this); actors.push_back(actor); return OK;} // Error: KO
-        int add_object(Object * const object)  {if (running || object->has_engine()) return KO; object->set_engine(this); objects.push_back(object); return OK;} // Error: KO
-        int add_prop(Prop * const prop)        {if (running || prop->has_engine()) return KO; prop->set_engine(this); props.push_back(prop); return OK;} // Error: KO
+        int add_actor(Actor * const actor); // Error: KO
+        int add_object(Object * const object); // Error: KO
+        int add_prop(Prop * const prop); // Error: KO
         
         /* remove */
         // Can only be done when the engine is interrupted
-        int remove_actor(Actor * const actor)      {if (running) return KO; actors.erase(std::remove(actors.begin(), actors.end(), actor), actors.end()); return OK;} // Error: KO
-        int remove_object(Object * const object)   {if (running) return KO; objects.erase(std::remove(objects.begin(), objects.end(), object), objects.end()); return OK;} // Error: KO
-        int remove_prop(Prop * const prop)         {if (running) return KO; props.erase(std::remove(props.begin(), props.end(), prop), props.end()); return OK;} // Error: KO
+        int remove_actor(Actor * const actor); // Error: KO
+        int remove_object(Object * const object); // Error: KO
+        int remove_prop(Prop * const prop); // Error: KO
 
         // ---------- Constructor --------- //
         Engine(); // Default

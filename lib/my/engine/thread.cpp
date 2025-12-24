@@ -91,7 +91,6 @@ void Engine::loop() {
 
 int Engine::start() {
     if (!window) return err_custom("Can't start without a valid window", KO, ERR_INFO);
-    alive = true;
     std::thread([this]() {loop();}).detach();
     return OK;
 }
@@ -100,7 +99,6 @@ void Engine::interrupt() {
     interrupted = true;
     while (running)
         std::this_thread::sleep_for(std::chrono::milliseconds(INTERRUPT_WAITING_MILLISECONDS));
-    alive = false;
 }
 
 void Engine::pause() {

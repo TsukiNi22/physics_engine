@@ -157,16 +157,19 @@ static void draw_object_dispatch(type_t id, const std::vector<vector2>& vectors)
 
 void Engine::draw_actor(const Actor * const actor)
 {
+    if (!actor->rendered) return;
     draw_object_dispatch(actor->id, actor->vectors);
 }
 
 void Engine::draw_object(const Object * const object)
 {
+    if (!actor->rendered) return;
     draw_object_dispatch(object->id, object->vectors);
 }
 
 void Engine::draw_prop(const Prop * const prop)
 {
+    if (!prop->rendered) return;
     draw_object_dispatch(prop->id, prop->vectors);
 }
 

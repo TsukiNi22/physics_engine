@@ -45,6 +45,7 @@ int Engine::init() {
     font = TTF_OpenFont(FONT_ARIAL, 12);
     if (!font) return err_custom(TTF_GetError(), KO, ERR_INFO);
     
+    alive = true;
     return OK;
 }
 
@@ -55,9 +56,11 @@ int Engine::destroy(bool failsafe) {
     }
     if (running) interrupt();
     SDL_DestroyWindow(window);
+    window = nullptr;
     SDL_Quit();
     TTF_Quit();
-    window = nullptr;
+
+    alive = false;
     return OK;
 }
 

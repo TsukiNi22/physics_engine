@@ -55,7 +55,9 @@ void Engine::update() {
     for (const Prop *prop: props) draw_prop(prop);
 
     // Apply physics
-
+    for (const Actor *actor: actors) physics_actor(actor);
+    for (const Object *object: objects) physics_object(object);
+    
     // Debug drawing
     if (debug_display) debug_draw();
 

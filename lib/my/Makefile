@@ -41,8 +41,10 @@ ENGINE := 	engine/thread.cpp \
 			engine/stack.cpp \
 			engine/constructor.cpp \
 			engine/destructor.cpp \
+			engine/object_handling.cpp \
 			engine/window.cpp \
 			engine/update.cpp \
+			engine/physics.cpp \
 			engine/draw.cpp
 
 STRING := 	string/retrive/strlen.cpp
