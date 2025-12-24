@@ -27,7 +27,8 @@ File Description:
     #include <stddef.h>     // size_t
     #include <stdbool.h>    // boolean
     #include <vector>       // vector
-    
+    #include <SDL2/SDL.h>   // SDL_Window
+
     /* function/class */
     #include "stack.hpp"    // Stack, resolve
     class Stack;
@@ -60,8 +61,13 @@ class Engine {
         std::vector<Object*> objects;
         std::vector<Prop*> props;
 
+        // window
+        SDL_Window *window = nullptr;
+        SDL_GLContext glContext;
+
         // Simulation
         Stack *stack = nullptr;
+        std::atomic<bool> paused{true}; // Thread running status
         std::atomic<bool> running{false}; // Thread status
         std::atomic<bool> interrupted{true}; // Thread aimed status
         size_t frame = 0; // Actual frame
@@ -69,6 +75,12 @@ class Engine {
         // --------- Pre-Function --------- //
         void update();
         void loop();
+        
+        /* window */
+        int init(); // Error: KO
+        void destroy();
+        int setup_window_context();
+        void destroy_window_context();
 
     public:
         // Window
@@ -81,23 +93,25 @@ class Engine {
         std::atomic<float> real_fps = -1.f;
        
         // --------- Pre-Function --------- //
-        void start();
+        int start(); // Error: KO
         void interrupt();
+        void pause();
+        void play();
 
         // ----------- Function ----------- //
         void resolve_stack();
 
         /* add */
         // Can only be done when the engine is interrupted
-        int add_actor(Actor * const actor)     {if (running || actor->has_engine()) return KO; actor->set_engine(this); actors.push_back(actor); return OK;}
-        int add_object(Object * const object)  {if (running || object->has_engine()) return KO; object->set_engine(this); objects.push_back(object); return OK;}
-        int add_prop(Prop * const prop)        {if (running || prop->has_engine()) return KO; prop->set_engine(this); props.push_back(prop); return OK;}
+        int add_actor(Actor * const actor)     {if (running || actor->has_engine()) return KO; actor->set_engine(this); actors.push_back(actor); return OK;} // Error: KO
+        int add_object(Object * const object)  {if (running || object->has_engine()) return KO; object->set_engine(this); objects.push_back(object); return OK;} // Error: KO
+        int add_prop(Prop * const prop)        {if (running || prop->has_engine()) return KO; prop->set_engine(this); props.push_back(prop); return OK;} // Error: KO
         
         /* remove */
         // Can only be done when the engine is interrupted
-        int remove_actor(Actor * const actor)      {if (running) return KO; actors.erase(std::remove(actors.begin(), actors.end(), actor), actors.end()); return OK;}
-        int remove_object(Object * const object)   {if (running) return KO; objects.erase(std::remove(objects.begin(), objects.end(), object), objects.end()); return OK;}
-        int remove_prop(Prop * const prop)         {if (running) return KO; props.erase(std::remove(props.begin(), props.end(), prop), props.end()); return OK;}
+        int remove_actor(Actor * const actor)      {if (running) return KO; actors.erase(std::remove(actors.begin(), actors.end(), actor), actors.end()); return OK;} // Error: KO
+        int remove_object(Object * const object)   {if (running) return KO; objects.erase(std::remove(objects.begin(), objects.end(), object), objects.end()); return OK;} // Error: KO
+        int remove_prop(Prop * const prop)         {if (running) return KO; props.erase(std::remove(props.begin(), props.end(), prop), props.end()); return OK;} // Error: KO
 
         // ---------- Constructor --------- //
         Engine(); // Default

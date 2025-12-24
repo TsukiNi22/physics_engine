@@ -40,7 +40,9 @@ endif
 ENGINE := 	engine/thread.cpp \
 			engine/stack.cpp \
 			engine/constructor.cpp \
-			engine/destructor.cpp
+			engine/destructor.cpp \
+			engine/window.cpp \
+			engine/update.cpp
 
 STRING := 	string/retrive/strlen.cpp
 
