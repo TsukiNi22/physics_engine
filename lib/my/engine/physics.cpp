@@ -48,7 +48,7 @@ static void compute_movement_dispatch(type_t id, std::vector<vector2>& vectors, 
 
 void Actor::physics(float coef)
 {
-    if (simulated) return;
+    if (!simulated) return;
     movement_vector += gravity * coef;
     compute_movement_dispatch(id, vectors, movement_vector);
 }
