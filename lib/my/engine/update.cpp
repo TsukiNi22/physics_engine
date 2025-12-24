@@ -50,13 +50,13 @@ void Engine::update() {
     std::sort(props.begin(), props.end(), [](const Prop *a, const Prop *b) {return a->layout < b->layout;});
 
     // Draw item
-    for (const Actor *actor: actors) draw_actor(actor);
-    for (const Object *object: objects) draw_object(object);
-    for (const Prop *prop: props) draw_prop(prop);
+    for (Actor *actor: actors) actor->draw();
+    for (Object *object: objects) object->draw();
+    for (Prop *prop: props) prop->draw();
 
     // Apply physics
-    for (const Actor *actor: actors) physics_actor(actor);
-    for (const Object *object: objects) physics_object(object);
+    for (Actor *actor: actors) actor->physics();
+    for (Object *object: objects) object->physics();
     
     // Debug drawing
     if (debug_display) debug_draw();

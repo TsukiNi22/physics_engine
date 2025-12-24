@@ -18,14 +18,13 @@ File Description:
 \**************************************************************/
 
 #include "object.hpp"
-#include "woof.hpp"
 
-void Engine::physics_actor(const Actor * const actor)
+void Actor::physics()
 {
-    if (!actor->simulated) return;
+    if (simulated) return;
 }
 
-void Engine::physics_object(const Object * const object)
+void Object::physics()
 {
-    if (!object->simulated) return;
+    if (!simulated) return;
 }

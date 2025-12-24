@@ -97,13 +97,11 @@ class Engine {
         /* drawing */
         void debug_draw();
         int draw_text(const char * const text, float scale, float x, float y);
-        void draw_actor(const Actor * const actor);
-        void draw_object(const Object * const object);
-        void draw_prop(const Prop * const prop);
     
         /* simulate */
         void physics_actor(const Actor * const actor);
         void physics_object(const Object * const object);
+    
     public:
         bool alive = false;
         

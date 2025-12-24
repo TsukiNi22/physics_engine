@@ -28,14 +28,22 @@ int main() {
     Engine engine;
     
     // setup
-    std::vector<vector2> vectors = {
-        {0.f, 0.f},
-        {25.f, 0.f},
-        {25.f, 15.f},
-        {0.f, 15.f}
+    std::vector<vector2> floor_vectors = {
+        {engine.area_width / -2.f, engine.area_height / -2.f + 25},
+        {engine.area_width / 2.f, engine.area_height / -2.f + 25},
+        {engine.area_width / 2.f, engine.area_height / -2.f},
+        {engine.area_width / -2.f, engine.area_height / -2.f}
     };
-    Prop *prop = new Prop(RECTANGLE, vectors);
-    engine.add_prop(prop);
+    vector2 floor_pivot = {0.f, 0.f};
+    Prop *floor = new Prop(RECTANGLE, floor_vectors, floor_pivot, 30.f);
+    engine.add_prop(floor);
+
+    std::vector<vector2> circle_vectors = {
+        {0.f, 0.f},
+        {50, 0},
+    };
+    Object *circle = new Object(CIRCLE, circle_vectors);
+    engine.add_object(circle);
 
     // run
     engine.start();
@@ -53,6 +61,8 @@ int main() {
     */
 
     // clear
-    delete prop;
+    delete floor;
+    delete circle;
+    
     return 0;
 }

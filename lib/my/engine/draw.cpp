@@ -27,6 +27,29 @@ File Description:
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+static vector2 rotate_point(const vector2& point, const vector2& pivot, const float deg)
+{
+    vector2 p = point;
+
+    float rad = -deg * (M_PI / 180.0f);
+    float s = sin(rad);
+    float c = cos(rad);
+
+    // Translate to pivot
+    p.x -= pivot.x;
+    p.y -= pivot.y;
+
+    // Rotate
+    float xnew = p.x * c - p.y * s;
+    float ynew = p.x * s + p.y * c;
+
+    // Translate back
+    p.x = xnew + pivot.x;
+    p.y = ynew + pivot.y;
+
+    return p;
+}
+
 int Engine::draw_text(const char * const text, float scale, float x, float y)
 {
     // Create the style for the text
@@ -75,52 +98,53 @@ int Engine::draw_text(const char * const text, float scale, float x, float y)
     return OK;
 }
 
-static void draw_shape(const std::vector<vector2>& v)
-{
-    if (v.size() < 2) return;
-
-    glBegin(GL_LINE_LOOP);
-        for (const auto& p : v)
-            glVertex2f(p.x, p.y);
-    glEnd();
-}
-
-static void draw_point(const std::vector<vector2>& v)
+static void draw_point(const std::vector<vector2>& v, const vector2 pivot, const float deg)
 {
     if (v.size() != 1) return;
 
+    vector2 p = rotate_point(v[0], pivot, deg);
+
     glBegin(GL_POINTS);
-        glVertex2f(v[0].x, v[0].y);
+        glVertex2f(p.x, p.y);
     glEnd();
 }
 
-static void draw_line(const std::vector<vector2>& v)
+static void draw_line(const std::vector<vector2>& v, const vector2 pivot, const float deg)
 {
     if (v.size() != 2) return;
 
+    vector2 a = rotate_point(v[0], pivot, deg);
+    vector2 b = rotate_point(v[1], pivot, deg);
+
     glBegin(GL_LINES);
-        glVertex2f(v[0].x, v[0].y);
-        glVertex2f(v[1].x, v[1].y);
+        glVertex2f(a.x, a.y);
+        glVertex2f(b.x, b.y);
     glEnd();
 }
 
-static void draw_triangle(const std::vector<vector2>& v)
+static void draw_triangle(const std::vector<vector2>& v, const vector2 pivot, const float deg)
 {
     if (v.size() != 3) return;
 
     glBegin(GL_TRIANGLES);
-        for (const auto& p : v)
+        for (const auto& orig : v) {
+            vector2_s p = orig;
+            p = rotate_point(p, pivot, deg);
             glVertex2f(p.x, p.y);
+        }
     glEnd();
 }
 
-static void draw_rectangle(const std::vector<vector2>& v)
+static void draw_rectangle(const std::vector<vector2>& v, const vector2 pivot, const float deg)
 {
     if (v.size() != 4) return;
 
     glBegin(GL_QUADS);
-        for (const auto& p : v)
+        for (const auto& orig : v) {
+            vector2_s p = orig;
+            p = rotate_point(p, pivot, deg);
             glVertex2f(p.x, p.y);
+        }
     glEnd();
 }
 
@@ -142,35 +166,48 @@ static void draw_circle(const std::vector<vector2>& v, int segments = CIRCLE_RES
     glEnd();
 }
 
-static void draw_object_dispatch(type_t id, const std::vector<vector2>& vectors)
+static void draw_shape(const std::vector<vector2>& v, const vector2 pivot, const float deg)
+{
+    if (v.size() < 2) return;
+
+    glBegin(GL_LINE_LOOP);
+        for (const auto& orig : v) {
+            vector2_s p = orig;
+            p = rotate_point(p, pivot, deg);
+            glVertex2f(p.x, p.y);
+        }
+    glEnd();
+}
+
+static void draw_object_dispatch(type_t id, const std::vector<vector2>& vectors, const vector2 pivot, const float deg)
 {
     switch (id) {
-        case POINT:     draw_point(vectors);     break;
-        case LINE:      draw_line(vectors);      break;
-        case TRIANGLE:  draw_triangle(vectors);  break;
-        case RECTANGLE: draw_rectangle(vectors); break;
-        case CIRCLE:    draw_circle(vectors);    break;
-        case SHAPE:     draw_shape(vectors);     break;
+        case POINT:     draw_point(vectors, pivot, deg);        break;
+        case LINE:      draw_line(vectors, pivot, deg);         break;
+        case TRIANGLE:  draw_triangle(vectors, pivot, deg);     break;
+        case RECTANGLE: draw_rectangle(vectors, pivot, deg);    break;
+        case CIRCLE:    draw_circle(vectors);                   break;
+        case SHAPE:     draw_shape(vectors, pivot, deg);        break;
         default: break; // Ignore SPRITE for now
     }
 }
 
-void Engine::draw_actor(const Actor * const actor)
+void Actor::draw()
 {
-    if (!actor->rendered) return;
-    draw_object_dispatch(actor->id, actor->vectors);
+    if (!rendered) return;
+    draw_object_dispatch(id, vectors, rotation_pivot, rotation);
 }
 
-void Engine::draw_object(const Object * const object)
+void Object::draw()
 {
-    if (!object->rendered) return;
-    draw_object_dispatch(object->id, object->vectors);
+    if (!rendered) return;
+    draw_object_dispatch(id, vectors, rotation_pivot, rotation);
 }
 
-void Engine::draw_prop(const Prop * const prop)
+void Prop::draw()
 {
-    if (!prop->rendered) return;
-    draw_object_dispatch(prop->id, prop->vectors);
+    if (!rendered) return;
+    draw_object_dispatch(id, vectors, rotation_pivot, rotation);
 }
 
 void Engine::debug_draw()

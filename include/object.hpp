@@ -63,12 +63,16 @@ class Actor {
     private:
         Engine *engine = nullptr;
 
-    public:
         // Shape
         type_t id;
         std::vector<vector2> vectors;
+        vector2 rotation_pivot{0.f, 0.f};
         float rotation = 0.f;
+        
+        // Physics
+        vector2 movement_vector{0.f, 0.f};
 
+    public:
         // Status
         std::atomic<bool> hitbox = true;
         std::atomic<bool> input = true;
@@ -83,8 +87,12 @@ class Actor {
         
         // Constructor
         Actor(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
-        Actor(type_t type, std::vector<vector2> data, float deg) : id(type), vectors(data), rotation(deg) {} // Default
-        
+        Actor(type_t type, std::vector<vector2> data, vector2 pivot, float deg) : id(type), vectors(data), rotation_pivot(pivot), rotation(deg) {} // With a rotation
+         
+        // --------- Pre-Function --------- //
+        void draw();
+        void physics();
+
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
         int set_engine(Engine *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
@@ -95,15 +103,16 @@ class Object {
     private:
         Engine *engine = nullptr;
         
+        // Shape
+        type_t id;
+        std::vector<vector2> vectors;
+        vector2 rotation_pivot{0.f, 0.f};
+        float rotation = 0.f;
+        
         // Physics
         vector2 movement_vector{0.f, 0.f};
 
     public:
-        // Shape
-        type_t id;
-        std::vector<vector2> vectors;
-        float rotation = 0.f;
-        
         // Status
         std::atomic<bool> hitbox = true;
         std::atomic<bool> simulated = true;
@@ -117,8 +126,12 @@ class Object {
                
         // Constructor
         Object(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
-        Object(type_t type, std::vector<vector2> data, float deg) : id(type), vectors(data), rotation(deg) {} // Default
+        Object(type_t type, std::vector<vector2> data, vector2 pivot, float deg) : id(type), vectors(data), rotation_pivot(pivot), rotation(deg) {} // With a rotation
         
+        // --------- Pre-Function --------- //
+        void draw();
+        void physics();
+
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
         int set_engine(Engine *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
@@ -129,15 +142,16 @@ class Prop {
     private:
         Engine *engine = nullptr;
 
+        // Shape
+        type_t id;
+        std::vector<vector2> vectors;
+        vector2 rotation_pivot{0.f, 0.f};
+        float rotation = 0.f;
+        
         // Physics
         vector2 movement_vector{0.f, 0.f};
 
     public:
-        // Shape
-        type_t id;
-        std::vector<vector2> vectors;
-        float rotation = 0.f;
- 
         // Status
         std::atomic<bool> hitbox = true;
         std::atomic<bool> rendered = true;
@@ -150,8 +164,11 @@ class Prop {
         
         // Constructor
         Prop(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
-        Prop(type_t type, std::vector<vector2> data, float deg) : id(type), vectors(data), rotation(deg) {} // Default
-        
+        Prop(type_t type, std::vector<vector2> data, vector2 pivot, float deg) : id(type), vectors(data), rotation_pivot(pivot), rotation(deg) {} // With a rotation
+         
+        // --------- Pre-Function --------- //
+        void draw();
+
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
         int set_engine(Engine *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
