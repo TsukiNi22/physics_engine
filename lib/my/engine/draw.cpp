@@ -31,7 +31,7 @@ static vector2 rotate_point(const vector2& point, const vector2& pivot, const fl
 {
     vector2 p = point;
 
-    float rad = -deg * (M_PI / 180.0f);
+    float rad = deg * (M_PI / 180.0f);
     float s = sin(rad);
     float c = cos(rad);
 

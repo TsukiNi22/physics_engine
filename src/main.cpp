@@ -35,7 +35,7 @@ int main() {
         {engine.area_width / -2.f, engine.area_height / -2.f}
     };
     vector2 floor_pivot = {0.f, 0.f};
-    Prop *floor = new Prop(RECTANGLE, floor_vectors, floor_pivot, 30.f);
+    Prop *floor = new Prop(RECTANGLE, floor_vectors, floor_pivot, 0.f);
     engine.add_prop(floor);
 
     std::vector<vector2> circle_vectors = {
