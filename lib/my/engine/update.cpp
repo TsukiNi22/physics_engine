@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 24/12/2025 by @authorTsukini
+##  @date 25/12/2025 by @authorTsukini
 
 File Name:
 ##  @file update.cpp
@@ -55,8 +55,9 @@ void Engine::update() {
     for (Prop *prop: props) prop->draw();
 
     // Apply physics
-    for (Actor *actor: actors) actor->physics();
-    for (Object *object: objects) object->physics();
+    
+    for (Actor *actor: actors) actor->physics(1.f / fps);
+    for (Object *object: objects) object->physics(1.f / fps);
     
     // Debug drawing
     if (debug_display) debug_draw();

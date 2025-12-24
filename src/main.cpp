@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 24/12/2025 by @authorTsukini
+##  @date 25/12/2025 by @authorTsukini
 
 File Name:
 ##  @file main.cpp
@@ -40,7 +40,7 @@ int main() {
 
     std::vector<vector2> circle_vectors = {
         {0.f, 0.f},
-        {50, 0},
+        {25, 0},
     };
     Object *circle = new Object(CIRCLE, circle_vectors);
     engine.add_object(circle);

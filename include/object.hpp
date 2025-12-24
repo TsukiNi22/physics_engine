@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 24/12/2025 by @authorTsukini
+##  @date 25/12/2025 by @authorTsukini
 
 File Name:
 ##  @file object.hpp
@@ -31,8 +31,11 @@ File Description:
     #include <atomic>       // atomic
     
     //----------------------------------------------------------------//
-    /* TYPEDEF */
+    /* DEFINE */
     #include "error.hpp"    // KO, OK
+
+    /* physics */
+    #define GRAVITY 9.81f // earth
 
 //----------------------------------------------------------------//
 /* TYPEDEF */
@@ -51,7 +54,11 @@ typedef enum type_e {
 typedef struct vector2_s {
     float x;
     float y;
+    vector2_s operator*(float f) const {return {x * f, y * f};}
+    vector2_s operator/(float f) const {return {x / f, y / f};}
+    vector2_s& operator+=(const vector2_s& v) {x += v.x; y += v.y; return *this;}
 } vector2;
+
 typedef struct vector3_s {
     float x;
     float y;
@@ -70,6 +77,7 @@ class Actor {
         float rotation = 0.f;
         
         // Physics
+        float mass = 1.f; // kg
         vector2 movement_vector{0.f, 0.f};
 
     public:
@@ -91,7 +99,7 @@ class Actor {
          
         // --------- Pre-Function --------- //
         void draw();
-        void physics();
+        void physics(float coef);
 
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
@@ -110,6 +118,7 @@ class Object {
         float rotation = 0.f;
         
         // Physics
+        float mass = 1.f; // kg
         vector2 movement_vector{0.f, 0.f};
 
     public:
@@ -130,7 +139,7 @@ class Object {
         
         // --------- Pre-Function --------- //
         void draw();
-        void physics();
+        void physics(float coef);
 
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
