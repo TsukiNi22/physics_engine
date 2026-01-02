@@ -35,7 +35,7 @@ File Description:
     #include "error.hpp"    // KO, OK
 
     /* physics */
-    #define GRAVITY 9.81f // earth
+    #define GRAVITY 25.f // 9.81f // earth
 
 //----------------------------------------------------------------//
 /* TYPEDEF */

@@ -85,7 +85,7 @@ void Actor::physics(const float delta_time)
 {
     if (!simulated) return;
     compute_velocity(delta_time, compute_drag_coef());
-    compute_movement_dispatch(id, vectors, velocity * delta_time);
+    compute_movement_dispatch(id, vectors, velocity);
 }
 
 void Object::compute_velocity(const float delta_time, const float drag_coef)
@@ -99,5 +99,5 @@ void Object::physics(const float delta_time)
 {
     if (!simulated) return;
     compute_velocity(delta_time, compute_drag_coef());
-    compute_movement_dispatch(id, vectors, velocity * delta_time);
+    compute_movement_dispatch(id, vectors, velocity);
 }
