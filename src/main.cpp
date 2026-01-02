@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 25/12/2025 by @authorTsukini
+##  @date 03/01/2026 by @authorTsukini
 
 File Name:
 ##  @file main.cpp
@@ -21,6 +21,7 @@ File Description:
 #include "object.hpp"
 #include "woof.hpp"
 #include <thread>
+#include <chrono>
 #include <vector>
 #include <iostream>
 
@@ -39,7 +40,7 @@ int main() {
     engine.add_prop(floor);
 
     std::vector<vector2> circle_vectors = {
-        {0.f, 0.f},
+        {0.f, engine.area_height / 2.f - 25},
         {25, 0},
     };
     Object *circle = new Object(CIRCLE, circle_vectors);

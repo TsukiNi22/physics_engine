@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 25/12/2025 by @authorTsukini
+##  @date 03/01/2026 by @authorTsukini
 
 File Name:
 ##  @file object.hpp
@@ -54,8 +54,11 @@ typedef enum type_e {
 typedef struct vector2_s {
     float x;
     float y;
+    vector2_s operator-() const {return {-x, -y};};
     vector2_s operator*(float f) const {return {x * f, y * f};}
     vector2_s operator/(float f) const {return {x / f, y / f};}
+    vector2_s operator+(float f) const {return {x + f, y + f};}
+    vector2_s operator+(const vector2_s& v) const {return {x + v.x, y + v.y};}
     vector2_s& operator+=(const vector2_s& v) {x += v.x; y += v.y; return *this;}
 } vector2;
 
@@ -78,7 +81,8 @@ class Actor {
         
         // Physics
         float mass = 1.f; // kg
-        vector2 movement_vector{0.f, 0.f};
+        vector2 velocity{0.f, 0.f};
+        vector2 acceleration{0.f, 0.f};
 
     public:
         // Status
@@ -99,7 +103,8 @@ class Actor {
          
         // --------- Pre-Function --------- //
         void draw();
-        void physics(float coef);
+        void physics(const float delta_time);
+        void compute_velocity(const float delta_time, const float drag_coef);
 
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
@@ -119,7 +124,8 @@ class Object {
         
         // Physics
         float mass = 1.f; // kg
-        vector2 movement_vector{0.f, 0.f};
+        vector2 velocity{0.f, 0.f};
+        vector2 acceleration{0.f, 0.f};
 
     public:
         // Status
@@ -139,7 +145,8 @@ class Object {
         
         // --------- Pre-Function --------- //
         void draw();
-        void physics(float coef);
+        void physics(const float delta_time);
+        void compute_velocity(const float delta_time, const float drag_coef);
 
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
@@ -157,9 +164,6 @@ class Prop {
         vector2 rotation_pivot{0.f, 0.f};
         float rotation = 0.f;
         
-        // Physics
-        vector2 movement_vector{0.f, 0.f};
-
     public:
         // Status
         std::atomic<bool> hitbox = true;
@@ -182,6 +186,13 @@ class Prop {
         bool has_engine() const {if (engine != nullptr) return true; return false;}
         int set_engine(Engine *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
 };
+
+
+//----------------------------------------------------------------//
+/* PROTOTYPE */
+
+/* calcul */
+vector2 rotate_point(const vector2& point, const vector2& pivot, const float deg);
 
 #endif /* OBJECT_H */
 

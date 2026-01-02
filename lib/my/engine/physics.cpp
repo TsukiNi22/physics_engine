@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 25/12/2025 by @authorTsukini
+##  @date 02/01/2026 by @authorTsukini
 
 File Name:
 ##  @file physics.cpp
@@ -21,6 +21,29 @@ File Description:
 
 // Default gravity vector
 static vector2 gravity{0.f, -GRAVITY};
+
+vector2 rotate_point(const vector2& point, const vector2& pivot, const float deg)
+{
+    vector2 p = point;
+
+    float rad = deg * (M_PI / 180.0f);
+    float s = sin(rad);
+    float c = cos(rad);
+
+    // Translate to pivot
+    p.x -= pivot.x;
+    p.y -= pivot.y;
+
+    // Rotate
+    float xnew = p.x * c - p.y * s;
+    float ynew = p.x * s + p.y * c;
+
+    // Translate back
+    p.x = xnew + pivot.x;
+    p.y = ynew + pivot.y;
+
+    return p;
+}
 
 static void compute_movement(std::vector<vector2>& vectors, const vector2 movement)
 {
@@ -46,16 +69,35 @@ static void compute_movement_dispatch(type_t id, std::vector<vector2>& vectors, 
     }
 }
 
-void Actor::physics(float coef)
+static float compute_drag_coef()
 {
-    if (!simulated) return;
-    movement_vector += gravity * coef;
-    compute_movement_dispatch(id, vectors, movement_vector);
+    return 0.f;
 }
 
-void Object::physics(float coef)
+void Actor::compute_velocity(const float delta_time, const float drag_coef)
+{
+    vector2 drag_force = velocity * drag_coef * -1;
+    acceleration = (gravity * mass + drag_force) / mass;
+    velocity += acceleration * delta_time;
+}
+
+void Actor::physics(const float delta_time)
 {
     if (!simulated) return;
-    movement_vector += gravity * coef;
-    compute_movement_dispatch(id, vectors, movement_vector);
+    compute_velocity(delta_time, compute_drag_coef());
+    compute_movement_dispatch(id, vectors, velocity * delta_time);
+}
+
+void Object::compute_velocity(const float delta_time, const float drag_coef)
+{
+    vector2 drag_force = velocity * drag_coef * -1;
+    acceleration = (gravity * mass + drag_force) / mass;
+    velocity += acceleration * delta_time;
+}
+
+void Object::physics(const float delta_time)
+{
+    if (!simulated) return;
+    compute_velocity(delta_time, compute_drag_coef());
+    compute_movement_dispatch(id, vectors, velocity * delta_time);
 }

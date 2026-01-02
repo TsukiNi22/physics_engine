@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 24/12/2025 by @authorTsukini
+##  @date 25/12/2025 by @authorTsukini
 
 File Name:
 ##  @file draw.cpp
@@ -26,29 +26,6 @@ File Description:
 #include <SDL2/SDL_ttf.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-
-static vector2 rotate_point(const vector2& point, const vector2& pivot, const float deg)
-{
-    vector2 p = point;
-
-    float rad = deg * (M_PI / 180.0f);
-    float s = sin(rad);
-    float c = cos(rad);
-
-    // Translate to pivot
-    p.x -= pivot.x;
-    p.y -= pivot.y;
-
-    // Rotate
-    float xnew = p.x * c - p.y * s;
-    float ynew = p.x * s + p.y * c;
-
-    // Translate back
-    p.x = xnew + pivot.x;
-    p.y = ynew + pivot.y;
-
-    return p;
-}
 
 int Engine::draw_text(const char * const text, float scale, float x, float y)
 {
