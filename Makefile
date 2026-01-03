@@ -54,7 +54,7 @@ $(TARGET): $(OBJ)
 
 $(BUILD_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) -c -o $@ $^
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $^
 
 lib:
 	@rm -f $(TARGET)

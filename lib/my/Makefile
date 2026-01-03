@@ -28,7 +28,6 @@ W += -Wuninitialized -Wmaybe-uninitialized
 DEBUG := -g -ggdb3
 
 CPPFLAGS := -I ../../include/
-LDFLAGS := -lm
 CXXFLAGS := $(W)
 
 ifeq ($(d), t)
@@ -45,6 +44,7 @@ ENGINE := 	engine/thread.cpp \
 			engine/window.cpp \
 			engine/update.cpp \
 			engine/physics.cpp \
+			engine/compute.cpp \
 			engine/draw.cpp
 
 STRING := 	string/retrive/strlen.cpp
@@ -79,7 +79,7 @@ $(TARGET): $(OBJ)
 
 $(BUILD_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
-	$(CC) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) -c -o $@ $^
+	$(CC) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $^
 
 clean:
 	@rm -rf $(BUILD_DIR)

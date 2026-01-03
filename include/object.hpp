@@ -187,11 +187,12 @@ class Prop {
         int set_engine(Engine *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
 };
 
-
 //----------------------------------------------------------------//
 /* PROTOTYPE */
 
 /* calcul */
+float compute_drag_coef(type_t id, std::vector<vector2>& vectors);
+void compute_movement_dispatch(type_t id, std::vector<vector2>& vectors, const vector2 movement);
 vector2 rotate_point(const vector2& point, const vector2& pivot, const float deg);
 
 #endif /* OBJECT_H */
