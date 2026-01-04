@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 03/01/2026 by @authorTsukini
+##  @date 05/01/2026 by @authorTsukini
 
 File Name:
 ##  @file compute.cpp
@@ -59,26 +59,20 @@ static void compute_movement_circle(std::vector<vector2>& vectors, const vector2
 void compute_movement_dispatch(type_t id, std::vector<vector2>& vectors, const vector2 movement)
 {
     switch (id) {
-        case POINT:     
-        case LINE:      
-        case TRIANGLE:  
-        case RECTANGLE: 
-        case SHAPE:     compute_movement(vectors, movement);        break;
+        case SPRITE: break; // Ignore SPRITE for now
+        case SHAPE:     compute_movement(vectors, movement); break;
         case CIRCLE:    compute_movement_circle(vectors, movement); break;
-        default: break; // Ignore SPRITE for now
+        default: break;
     }
 }
 
 float compute_drag_coef(type_t id, std::vector<vector2>& vectors)
 {
     switch (id) {
-        case POINT:     
-        case LINE:      
-        case TRIANGLE:  
-        case RECTANGLE: 
+        case SPRITE: break; // Ignore SPRITE for now
         case SHAPE:     return 0.f;
         case CIRCLE:    return 0.f;
-        default: break; // Ignore SPRITE for now
+        default: break;
     }
     return 0.f;
 }

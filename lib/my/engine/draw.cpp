@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 03/01/2026 by @authorTsukini
+##  @date 05/01/2026 by @authorTsukini
 
 File Name:
 ##  @file draw.cpp
@@ -75,74 +75,6 @@ int Engine::draw_text(const char * const text, float scale, float x, float y)
     return OK;
 }
 
-static void draw_point(const std::vector<vector2>& v, const vector2 pivot, const float deg)
-{
-    if (v.size() != 1) return;
-
-    vector2 p = rotate_point(v[0], pivot, deg);
-
-    glBegin(GL_POINTS);
-        glVertex2f(p.x, p.y);
-    glEnd();
-}
-
-static void draw_line(const std::vector<vector2>& v, const vector2 pivot, const float deg)
-{
-    if (v.size() != 2) return;
-
-    vector2 a = rotate_point(v[0], pivot, deg);
-    vector2 b = rotate_point(v[1], pivot, deg);
-
-    glBegin(GL_LINES);
-        glVertex2f(a.x, a.y);
-        glVertex2f(b.x, b.y);
-    glEnd();
-}
-
-static void draw_triangle(const std::vector<vector2>& v, const vector2 pivot, const float deg)
-{
-    if (v.size() != 3) return;
-
-    glBegin(GL_TRIANGLES);
-        for (const auto& orig : v) {
-            vector2_s p = orig;
-            p = rotate_point(p, pivot, deg);
-            glVertex2f(p.x, p.y);
-        }
-    glEnd();
-}
-
-static void draw_rectangle(const std::vector<vector2>& v, const vector2 pivot, const float deg)
-{
-    if (v.size() != 4) return;
-
-    glBegin(GL_QUADS);
-        for (const auto& orig : v) {
-            vector2_s p = orig;
-            p = rotate_point(p, pivot, deg);
-            glVertex2f(p.x, p.y);
-        }
-    glEnd();
-}
-
-static void draw_circle(const std::vector<vector2>& v, int segments = CIRCLE_RESOLUTION)
-{
-    if (v.size() != 2) return;
-
-    const vector2& center = v[0];
-    float radius = v[1].x;
-
-    glBegin(GL_LINE_LOOP);
-        for (int i = 0; i < segments; ++i) {
-            float angle = 2.0f * M_PI * i / segments;
-            glVertex2f(
-                center.x + std::cos(angle) * radius,
-                center.y + std::sin(angle) * radius
-            );
-        }
-    glEnd();
-}
-
 static void draw_shape(const std::vector<vector2>& v, const vector2 pivot, const float deg)
 {
     if (v.size() < 2) return;
@@ -156,16 +88,31 @@ static void draw_shape(const std::vector<vector2>& v, const vector2 pivot, const
     glEnd();
 }
 
+static void draw_circle(const std::vector<vector2>& v, int segments = CIRCLE_RESOLUTION)
+{
+    if (v.size() != 2) return;
+
+    const vector2& origin = v[0];
+    float radius = v[1].x;
+
+    glBegin(GL_LINE_LOOP);
+        for (int i = 0; i < segments; ++i) {
+            float angle = 2.0f * M_PI * i / segments;
+            glVertex2f(
+                origin.x + std::cos(angle) * radius,
+                origin.y + std::sin(angle) * radius
+            );
+        }
+    glEnd();
+}
+
 static void draw_object_dispatch(type_t id, const std::vector<vector2>& vectors, const vector2 pivot, const float deg)
 {
     switch (id) {
-        case POINT:     draw_point(vectors, pivot, deg);        break;
-        case LINE:      draw_line(vectors, pivot, deg);         break;
-        case TRIANGLE:  draw_triangle(vectors, pivot, deg);     break;
-        case RECTANGLE: draw_rectangle(vectors, pivot, deg);    break;
-        case CIRCLE:    draw_circle(vectors);                   break;
-        case SHAPE:     draw_shape(vectors, pivot, deg);        break;
-        default: break; // Ignore SPRITE for now
+        case SPRITE: break; // Ignore SPRITE for now
+        case SHAPE:     draw_shape(vectors, pivot, deg); break;
+        case CIRCLE:    draw_circle(vectors); break;
+        default: break;
     }
 }
 

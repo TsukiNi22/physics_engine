@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 03/01/2026 by @authorTsukini
+##  @date 05/01/2026 by @authorTsukini
 
 File Name:
 ##  @file object.hpp
@@ -41,19 +41,17 @@ File Description:
 /* TYPEDEF */
 
 typedef enum type_e {
-    SPRITE = -2,    // Picture (In the future)
-    SHAPE = -1,     // list of point
-    POINT = 0,      // 1 point
-    LINE,           // 2 point
-    TRIANGLE,       // 3 point
-    RECTANGLE,      // 4 point
-    CIRCLE,         // center + radius
+    SPRITE = 0, // Picture (In the future)
+    SHAPE,      // list of point
+    CIRCLE,     // origin + {radius, 0.f}
 } type_t;
 
 /* vector */
 typedef struct vector2_s {
     float x;
     float y;
+
+    // Operator
     vector2_s operator-() const {return {-x, -y};};
     vector2_s operator*(float f) const {return {x * f, y * f};}
     vector2_s operator/(float f) const {return {x / f, y / f};}
@@ -84,6 +82,11 @@ class Actor {
         vector2 velocity{0.f, 0.f};
         vector2 acceleration{0.f, 0.f};
 
+        // Style
+        float r = 0.f;
+        float g = 0.f;
+        float b = 0.f;
+
     public:
         // Status
         std::atomic<bool> hitbox = true;
@@ -91,11 +94,6 @@ class Actor {
         std::atomic<bool> simulated = true;
         std::atomic<bool> rendered = true;
         std::atomic<int> layout = 0;
-
-        // Style
-        float r = 0.f;
-        float g = 0.f;
-        float b = 0.f;
         
         // Constructor
         Actor(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
@@ -127,18 +125,18 @@ class Object {
         vector2 velocity{0.f, 0.f};
         vector2 acceleration{0.f, 0.f};
 
+        // Style
+        float r = 0.f;
+        float g = 0.f;
+        float b = 0.f;
+
     public:
         // Status
         std::atomic<bool> hitbox = true;
         std::atomic<bool> simulated = true;
         std::atomic<bool> rendered = true;
         std::atomic<int> layout = 0;
- 
-        // Style
-        float r = 0.f;
-        float g = 0.f;
-        float b = 0.f;
-               
+                
         // Constructor
         Object(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
         Object(type_t type, std::vector<vector2> data, vector2 pivot, float deg) : id(type), vectors(data), rotation_pivot(pivot), rotation(deg) {} // With a rotation
@@ -164,16 +162,16 @@ class Prop {
         vector2 rotation_pivot{0.f, 0.f};
         float rotation = 0.f;
         
+        // Style
+        float r = 0.f;
+        float g = 0.f;
+        float b = 0.f;
+
     public:
         // Status
         std::atomic<bool> hitbox = true;
         std::atomic<bool> rendered = true;
         std::atomic<int> layout = 0;
-
-        // Style
-        float r = 0.f;
-        float g = 0.f;
-        float b = 0.f;
         
         // Constructor
         Prop(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default

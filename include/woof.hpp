@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 02/01/2026 by @authorTsukini
+##  @date 04/01/2026 by @authorTsukini
 
 File Name:
 ##  @file woof.hpp
@@ -45,8 +45,8 @@ File Description:
     /* window */
     #define DEFAULT_WIDTH 800
     #define DEFAULT_HEIGHT 600
-    #define DEFAULT_WORLD_WIDTH 800
-    #define DEFAULT_WORLD_HEIGHT 600
+    #define DEFAULT_WORLD_WIDTH DEFAULT_WIDTH
+    #define DEFAULT_WORLD_HEIGHT DEFAULT_HEIGHT
     
     /* simulation */
     #define DEFAULT_FPS 30 // max: 1000
@@ -71,9 +71,9 @@ class Engine {
         std::vector<Prop*> props;
 
         // window
+        std::atomic<bool> closing{false};
         SDL_Window *window = nullptr;
         SDL_GLContext glContext;
-        std::atomic<bool> closing{false};
         TTF_Font* font = nullptr;
         bool debug_display = false;
 
