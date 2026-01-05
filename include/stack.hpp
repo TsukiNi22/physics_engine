@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 24/12/2025 by @authorTsukini
+##  @date 05/01/2026 by @authorTsukini
 
 File Name:
 ##  @file stack.hpp
@@ -24,11 +24,11 @@ File Description:
     /* INCLUDE */
 
     /* type */
+    #include "woof.hpp"     // Engine
+    class Engine;
     #include <vector>       // vector
     #include <mutex>        // mutex
     #include <algorithm>    // remove
-    #include "woof.hpp"     // Engine
-    class Engine;
 
 //----------------------------------------------------------------//
 /* TYPEDEF */

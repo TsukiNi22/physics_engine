@@ -43,7 +43,7 @@ File Description:
 typedef enum type_e {
     SPRITE = 0, // Picture (In the future)
     SHAPE,      // list of point
-    CIRCLE,     // origin + {radius, 0.f}
+    CIRCLE,     // origin, {radius, 0.f}
 } type_t;
 
 /* vector */
@@ -98,7 +98,7 @@ class Actor {
         // Constructor
         Actor(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
         Actor(type_t type, std::vector<vector2> data, vector2 pivot, float deg) : id(type), vectors(data), rotation_pivot(pivot), rotation(deg) {} // With a rotation
-         
+
         // --------- Pre-Function --------- //
         void draw();
         void physics(const float delta_time);
@@ -190,8 +190,7 @@ class Prop {
 
 /* calcul */
 float compute_drag_coef(type_t id, std::vector<vector2>& vectors);
-void compute_movement_dispatch(type_t id, std::vector<vector2>& vectors, const vector2 movement);
+void compute_acceleration(type_t id, std::vector<vector2>& vectors, const vector2 movement);
 vector2 rotate_point(const vector2& point, const vector2& pivot, const float deg);
 
 #endif /* OBJECT_H */
-

@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 24/12/2025 by @authorTsukini
+##  @date 05/01/2026 by @authorTsukini
 
 File Name:
 ##  @file stack.cpp
@@ -34,7 +34,7 @@ void Engine::resolve_stack() {
     bool status = false;
     
     // Interrupt if it's running
-    if (running) {
+    if (!paused) {
         pause();
         status = true;
     }
