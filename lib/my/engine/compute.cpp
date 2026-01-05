@@ -45,27 +45,6 @@ vector2 rotate_point(const vector2& point, const vector2& pivot, const float deg
     return p;
 }
 
-static void compute_acceleration_shape(std::vector<vector2>& vectors, const vector2 movement)
-{
-    for (vector2& p : vectors) p += movement;
-}
-
-static void compute_acceleration_circle(std::vector<vector2>& vectors, const vector2 movement)
-{
-    vector2& p = vectors[0];
-    p += movement;
-}
-
-void compute_acceleration(type_t id, std::vector<vector2>& vectors, const vector2 movement)
-{
-    switch (id) {
-        case SPRITE: break; // Ignore SPRITE for now
-        case SHAPE:     compute_acceleration_shape(vectors, movement); break;
-        case CIRCLE:    compute_acceleration_circle(vectors, movement); break;
-        default: break;
-    }
-}
-
 float compute_drag_coef(type_t id, std::vector<vector2>& vectors)
 {
     switch (id) {
@@ -89,4 +68,25 @@ void Object::compute_velocity(const float delta_time, const float drag_coef)
     vector2 drag_force = velocity * drag_coef * -1;
     acceleration = (gravity * mass + drag_force) / mass;
     velocity += acceleration * delta_time;
+}
+
+static void compute_acceleration_shape(std::vector<vector2>& vectors, const vector2 velocity)
+{
+    for (vector2& p : vectors) p += velocity;
+}
+
+static void compute_acceleration_circle(std::vector<vector2>& vectors, const vector2 velocity)
+{
+    vector2& p = vectors[0];
+    p += velocity;
+}
+
+void compute_acceleration(type_t id, std::vector<vector2>& vectors, const vector2 velocity)
+{
+    switch (id) {
+        case SPRITE: break; // Ignore SPRITE for now
+        case SHAPE:     compute_acceleration_shape(vectors, velocity); break;
+        case CIRCLE:    compute_acceleration_circle(vectors, velocity); break;
+        default: break;
+    }
 }

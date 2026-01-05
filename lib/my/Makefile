@@ -44,6 +44,7 @@ ENGINE := 	engine/thread.cpp \
 			engine/window.cpp \
 			engine/update.cpp \
 			engine/physics.cpp \
+			engine/collisions.cpp \
 			engine/compute.cpp \
 			engine/draw.cpp
 

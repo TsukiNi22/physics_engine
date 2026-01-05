@@ -66,6 +66,11 @@ typedef struct vector3_s {
     float z;
 } vector3;
 
+/* predef */
+class Actor;
+class Object;
+class Prop;
+
 /* actor */
 class Actor {
     private:
@@ -98,7 +103,12 @@ class Actor {
         // Constructor
         Actor(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
         Actor(type_t type, std::vector<vector2> data, vector2 pivot, float deg) : id(type), vectors(data), rotation_pivot(pivot), rotation(deg) {} // With a rotation
-
+        
+        // --------- Pre-Operator --------- //
+        bool operator&&(const Actor& other) const;
+        bool operator&&(const Object& other) const;
+        bool operator&&(const Prop& other) const;
+        
         // --------- Pre-Function --------- //
         void draw();
         void physics(const float delta_time);
@@ -141,6 +151,11 @@ class Object {
         Object(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
         Object(type_t type, std::vector<vector2> data, vector2 pivot, float deg) : id(type), vectors(data), rotation_pivot(pivot), rotation(deg) {} // With a rotation
         
+        // --------- Pre-Operator --------- //
+        bool operator&&(const Actor& other) const;
+        bool operator&&(const Object& other) const;
+        bool operator&&(const Prop& other) const;
+        
         // --------- Pre-Function --------- //
         void draw();
         void physics(const float delta_time);
@@ -176,7 +191,12 @@ class Prop {
         // Constructor
         Prop(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
         Prop(type_t type, std::vector<vector2> data, vector2 pivot, float deg) : id(type), vectors(data), rotation_pivot(pivot), rotation(deg) {} // With a rotation
-         
+        
+        // --------- Pre-Operator --------- //
+        bool operator&&(const Actor& other) const;
+        bool operator&&(const Object& other) const;
+        bool operator&&(const Prop& other) const;
+
         // --------- Pre-Function --------- //
         void draw();
 
@@ -190,7 +210,7 @@ class Prop {
 
 /* calcul */
 float compute_drag_coef(type_t id, std::vector<vector2>& vectors);
-void compute_acceleration(type_t id, std::vector<vector2>& vectors, const vector2 movement);
+void compute_acceleration(type_t id, std::vector<vector2>& vectors, const vector2 velocity);
 vector2 rotate_point(const vector2& point, const vector2& pivot, const float deg);
 
 #endif /* OBJECT_H */

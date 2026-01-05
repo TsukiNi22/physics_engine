@@ -11,7 +11,7 @@ Edition:
 ##  @date 05/01/2026 by @authorTsukini
 
 File Name:
-##  @file physics.cpp
+##  @file Simulate.cpp
 
 File Description:
 ##  Simulate the movement/physics
@@ -21,16 +21,12 @@ File Description:
 
 void Actor::physics(const float delta_time)
 {
-    if (!simulated) return;
     compute_velocity(delta_time, compute_drag_coef(id, vectors));
-    // Get the list of collider for actors, objects and props
-    // Apply the collision to the velocity
     compute_acceleration(id, vectors, velocity);
 }
 
 void Object::physics(const float delta_time)
 {
-    if (!simulated) return;
     compute_velocity(delta_time, compute_drag_coef(id, vectors));
     compute_acceleration(id, vectors, velocity);
 }
