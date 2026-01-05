@@ -35,6 +35,7 @@ File Description:
     class Stack;
     #include "object.hpp"   // Actor, Object, Prop
     class Actor; class Object; class Prop;
+    struct vector2_s;
     #include <algorithm>    // remove
     #include <atomic>       // atomic
 
@@ -148,5 +149,35 @@ class Engine {
         // ----------- Destructor --------- //
         ~Engine(); // Default
 };
+
+//----------------------------------------------------------------//
+/* PROTOTYPE */
+
+/* actors */
+//Actor *create_actor_spite(...);
+Actor *create_actor_shape(std::vector<vector2_s> vectors, vector2_s pivot, float angle);
+Actor *create_actor_shape(std::vector<vector2_s> vectors, float angle);
+Actor *create_actor_shape(std::vector<vector2_s> vectors);
+Actor *create_actor_circle(float x, float y, float radius);
+Actor *create_actor_circle(vector2_s origin, float radius);
+Actor *create_actor_circle(std::vector<vector2_s> vectors);
+
+/* objects */
+//Object *create_object_sprite(...);
+Object *create_object_shape(std::vector<vector2_s> vectors, vector2_s pivot, float angle);
+Object *create_object_shape(std::vector<vector2_s> vectors, float angle);
+Object *create_object_shape(std::vector<vector2_s> vectors);
+Object *create_object_circle(float x, float y, float radius);
+Object *create_object_circle(vector2_s origin, float radius);
+Object *create_object_circle(std::vector<vector2_s> vectors);
+
+/* props */
+//Prop *create_prop_sprite(...);
+Prop *create_prop_shape(std::vector<vector2_s> vectors, vector2_s pivot, float angle);
+Prop *create_prop_shape(std::vector<vector2_s> vectors, float angle);
+Prop *create_prop_shape(std::vector<vector2_s> vectors);
+Prop *create_prop_circle(float x, float y, float radius);
+Prop *create_prop_circle(vector2_s origin, float radius);
+Prop *create_prop_circle(std::vector<vector2_s> vectors);
 
 #endif /* WOOF_H */
