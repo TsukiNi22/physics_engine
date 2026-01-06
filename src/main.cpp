@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 05/01/2026 by @authorTsukini
+##  @date 06/01/2026 by @authorTsukini
 
 File Name:
 ##  @file main.cpp
@@ -30,21 +30,19 @@ int main() {
     
     // setup
     std::vector<vector2> floor_vectors = {
-        {engine.area_width / -2.f, engine.area_height / -2.f + 25},
+        {engine.area_width / -2.f + 1, engine.area_height / -2.f + 25},
         {engine.area_width / 2.f, engine.area_height / -2.f + 25},
         {engine.area_width / 2.f, engine.area_height / -2.f},
-        {engine.area_width / -2.f, engine.area_height / -2.f}
+        {engine.area_width / -2.f + 1, engine.area_height / -2.f}
     };
-    vector2 floor_pivot = {0.f, 0.f};
-    Prop *floor = new Prop(SHAPE, floor_vectors, floor_pivot, 0.f);
+    Prop *floor = create_prop_shape(floor_vectors);
     engine.add_prop(floor);
 
-    std::vector<vector2> circle_vectors = {
-        {0.f, engine.area_height / 2.f - 25},
-        {25, 0},
-    };
-    Object *circle = new Object(CIRCLE, circle_vectors);
+    Object *circle = create_object_circle(0.f, engine.area_height / 2.f - 25, 25.f);
     engine.add_object(circle);
+
+    if (COMPARE_OBJECT_PTR(circle, floor))
+        std::cout << "Yes1" << std::endl;
 
     // run
     engine.start();

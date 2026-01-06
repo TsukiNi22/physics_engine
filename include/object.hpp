@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 05/01/2026 by @authorTsukini
+##  @date 06/01/2026 by @authorTsukini
 
 File Name:
 ##  @file object.hpp
@@ -36,6 +36,12 @@ File Description:
 
     /* physics */
     #define GRAVITY 25.f // 9.81f // earth
+        
+    /* compare object */
+    #define COMPARE_OBJECT(object1, object2) compare_objects(object1.get_id(), object1.get_vectors(), object1.get_pivot(), object1.get_rotation(), object1.get_acceleration(), \
+        object2.get_id(), object2.get_vectors(), object2.get_pivot(), object2.get_rotation(), object2.get_acceleration())
+    #define COMPARE_OBJECT_PTR(object1, object2) compare_objects(object1->get_id(), object1->get_vectors(), object1->get_pivot(), object1->get_rotation(), object1->get_acceleration(), \
+        object2->get_id(), object2->get_vectors(), object2->get_pivot(), object2->get_rotation(), object2->get_acceleration())
 
 //----------------------------------------------------------------//
 /* TYPEDEF */
@@ -103,12 +109,7 @@ class Actor {
         // Constructor
         Actor(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
         Actor(type_t type, std::vector<vector2> data, vector2 pivot, float deg) : id(type), vectors(data), rotation_pivot(pivot), rotation(deg) {} // With a rotation
-        
-        // --------- Pre-Operator --------- //
-        bool operator&&(const Actor& other) const;
-        bool operator&&(const Object& other) const;
-        bool operator&&(const Prop& other) const;
-        
+ 
         // --------- Pre-Function --------- //
         void draw();
         void physics(const float delta_time);
@@ -117,6 +118,13 @@ class Actor {
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
         int set_engine(Engine *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
+
+        // Don't use manualy these unsecured thread function, unexpeted behavior might append
+        type_t get_id() const {return id;}
+        std::vector<vector2> get_vectors() const {return vectors;}
+        vector2 get_pivot() const {return rotation_pivot;}
+        float get_rotation() const {return rotation;}
+        vector2 get_acceleration() const {return acceleration;}
 };
 
 /* object */
@@ -151,11 +159,6 @@ class Object {
         Object(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
         Object(type_t type, std::vector<vector2> data, vector2 pivot, float deg) : id(type), vectors(data), rotation_pivot(pivot), rotation(deg) {} // With a rotation
         
-        // --------- Pre-Operator --------- //
-        bool operator&&(const Actor& other) const;
-        bool operator&&(const Object& other) const;
-        bool operator&&(const Prop& other) const;
-        
         // --------- Pre-Function --------- //
         void draw();
         void physics(const float delta_time);
@@ -164,6 +167,13 @@ class Object {
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
         int set_engine(Engine *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
+
+        // Don't use manualy these unsecured thread function, unexpeted behavior might append
+        type_t get_id() const {return id;}
+        std::vector<vector2> get_vectors() const {return vectors;}
+        vector2 get_pivot() const {return rotation_pivot;}
+        float get_rotation() const {return rotation;}
+        vector2 get_acceleration() const {return acceleration;}
 };
 
 /* prop */
@@ -176,6 +186,9 @@ class Prop {
         std::vector<vector2> vectors;
         vector2 rotation_pivot{0.f, 0.f};
         float rotation = 0.f;
+        
+        // Physics
+        vector2 acceleration{0.f, 0.f}; // Unused always at the original value (only to uniformize the hitbox detection)
         
         // Style
         float r = 0.f;
@@ -192,17 +205,19 @@ class Prop {
         Prop(type_t type, std::vector<vector2> data) : id(type), vectors(data) {} // Default
         Prop(type_t type, std::vector<vector2> data, vector2 pivot, float deg) : id(type), vectors(data), rotation_pivot(pivot), rotation(deg) {} // With a rotation
         
-        // --------- Pre-Operator --------- //
-        bool operator&&(const Actor& other) const;
-        bool operator&&(const Object& other) const;
-        bool operator&&(const Prop& other) const;
-
         // --------- Pre-Function --------- //
         void draw();
 
         // ----------- Function ----------- //
         bool has_engine() const {if (engine != nullptr) return true; return false;}
         int set_engine(Engine *new_engine) {if (engine != nullptr) return KO; engine = new_engine; return OK;}
+
+        // Don't use manualy these unsecured thread function, unexpeted behavior might append
+        type_t get_id() const {return id;}
+        std::vector<vector2> get_vectors() const {return vectors;}
+        vector2 get_pivot() const {return rotation_pivot;}
+        float get_rotation() const {return rotation;}
+        vector2 get_acceleration() const {return acceleration;}
 };
 
 //----------------------------------------------------------------//
@@ -212,5 +227,17 @@ class Prop {
 float compute_drag_coef(type_t id, std::vector<vector2>& vectors);
 void compute_acceleration(type_t id, std::vector<vector2>& vectors, const vector2 velocity);
 vector2 rotate_point(const vector2& point, const vector2& pivot, const float deg);
+
+/* collisions */
+bool compare_objects(
+    // First
+    type_t id1, const std::vector<vector2>& vectors1,
+    const vector2& pivot1, float rotation1,
+    const vector2& acceleration1,
+    // Second
+    type_t id2, const std::vector<vector2>& vectors2,
+    const vector2& pivot2, float rotation2,
+    const vector2& acceleration2
+);
 
 #endif /* OBJECT_H */
