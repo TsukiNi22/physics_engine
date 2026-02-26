@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 06/01/2026 by @authorTsukini
+##  @date 31/01/2026 by @author Tsukini
 
 File Name:
 ##  @file main.cpp
@@ -27,7 +27,7 @@ File Description:
 
 int main() {
     Engine engine;
-    
+
     // setup
     std::vector<vector2> floor_vectors = {
         {engine.area_width / -2.f + 1, engine.area_height / -2.f + 25},

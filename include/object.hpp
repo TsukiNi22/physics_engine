@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 06/01/2026 by @authorTsukini
+##  @date 19/01/2026 by @authorTsukini
 
 File Name:
 ##  @file object.hpp
@@ -97,6 +97,7 @@ class Actor {
         float r = 0.f;
         float g = 0.f;
         float b = 0.f;
+        float fill = true;
 
     public:
         // Status
@@ -147,6 +148,7 @@ class Object {
         float r = 0.f;
         float g = 0.f;
         float b = 0.f;
+        float fill = true;
 
     public:
         // Status
@@ -194,6 +196,7 @@ class Prop {
         float r = 0.f;
         float g = 0.f;
         float b = 0.f;
+        float fill = true;
 
     public:
         // Status

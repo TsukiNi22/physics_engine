@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 06/01/2026 by @authorTsukini
+##  @date 09/01/2026 by @authorTsukini
 
 File Name:
 ##  @file collisions.cpp
@@ -129,6 +129,55 @@ static bool basic_check(
     return false;
 }
 
+static std::vector<vector3> get_sides_vector(
+    type_t id, const std::vector<vector2>& vectors,
+    const vector2& pivot, float rotation,
+    const vector2& acceleration
+)
+{
+    std::vector<vector3> sides_vector;
+
+    /* SHAPE */
+    if (id == SHAPE) {
+        /*for (; vectors[]; const auto& orig = vectors[i]) {
+            vector2 v = orig;
+            vector2 vacc = orig;
+            v = rotate_point(v, pivot, rotation);
+            vacc = rotate_point(vacc + acceleration, pivot, rotation);
+            
+        }*/   
+
+    /* CIRCLE */
+    } else if (id == CIRCLE) {
+        
+
+    }
+
+    return sides_vector;
+}
+
+static bool advenced_check(
+    // First
+    type_t id1, const std::vector<vector2>& vectors1,
+    const vector2& pivot1, float rotation1,
+    const vector2& acceleration1,
+    // Second
+    type_t id2, const std::vector<vector2>& vectors2,
+    const vector2& pivot2, float rotation2,
+    const vector2& acceleration2
+)
+{
+    float p_x = 0.f, p_y = 0.f;
+    float v_x = 0.f, v_y = 0.f;
+    float v_len = 0.f;
+    std::vector<vector3> vectors = get_sides_vector(id1, vectors1, pivot1, rotation1, acceleration1);
+
+    // for each possible side of the first shape check each point of the other one
+
+    return false;
+}
+
+
 // Uniformize & Compare the input
 bool compare_objects(
     // First
@@ -142,7 +191,7 @@ bool compare_objects(
 )
 {
     if (basic_check(id1, vectors1, pivot1, rotation1, acceleration1, id2, vectors2, pivot2, rotation2, acceleration2))
-        if (true)
+        if (advenced_check(id1, vectors1, pivot1, rotation1, acceleration1, id2, vectors2, pivot2, rotation2, acceleration2))
             return true;
     return false;
 }
