@@ -1,0 +1,63 @@
+cmake_minimum_required(VERSION 3.20)
+set(TARGET woof)
+project(${TARGET} LANGUAGES CXX)
+
+# =========================
+# Compilateur & Standard
+# =========================
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_COMPILER clang++)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON) # Moderne compilation -fPIE
+
+# =========================
+#<Right> Warnings
+# =========================
+add_compile_options(
+    -W
+    -Wall
+    -Wextra
+    -Wpedantic
+    -Wunused-parameter
+    -Wshadow
+    -Wuninitialized
+)
+
+# =========================
+# Sources
+# =========================
+set(SRC
+    # Nothing for now
+)
+add_library(${TARGET} STATIC ${SRC})
+#add_library(${TARGET} SHARED ${SRC})
+
+# =========================
+# Dependencies
+# =========================
+add_library(utils STATIC IMPORTED)
+set_target_properties(utils PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/cmake/libutils.a)
+target_link_libraries(${TARGET} PRIVATE utils)
+
+# =========================
+# Includes
+# =========================
+target_include_directories(${TARGET} PUBLIC include)
+#target_link_libraries(${TARGET} PRIVATE ...)
+
+# =========================
+# Modes
+# =========================
+target_compile_options(${TARGET} PRIVATE
+    $<$<CONFIG:Debug>:-g -ggdb3>
+    $<$<CONFIG:Release>:-O1>
+)
+
+# =========================
+# Utils
+# =========================
+add_custom_target(get_unregistered_files
+    COMMAND bash ${CMAKE_SOURCE_DIR}/cmake/script/check_files.sh unregistered ${SRC}
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)

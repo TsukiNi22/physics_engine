@@ -1,18 +1,19 @@
-*.log
-*.gc*
-*.sw*
-*.a
+## Compilation
 *.o
+*.a
+a.out
+
+## Vim
+*.sw*
 \#*#
 *~
-.obj
-.info
-vgcore.*
-main_test*.cpp
-test_sample.cpp
-a.out
-unit_tests
 :
 q
 vg
-woof
+z
+
+## CMake
+build/
+
+## Other
+.info
