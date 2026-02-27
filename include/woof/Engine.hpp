@@ -29,12 +29,6 @@ File Description:
     #include <memory>               // std::shared_ptr
     #include <string>               // std::string
 
-    //----------------------------------------------------------------//
-    /* DEFINE */
-
-    /* default values */
-    #define DEFAULT_GRAPHIC_LIB "opengl"
-
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* TYPDEF */
@@ -67,8 +61,8 @@ class Engine {
         Engine& operator=(Engine&& object) = delete;
 
         // ---------- Constructor --------- //
-        Engine() noexcept; // Automatic selection of the graphic lib
-        Engine(std::string graphic_lib) noexcept; // Manual selection for the graphic lib 
+        Engine(); // Automatic selection of the graphic lib
+        Engine(std::string graphic_lib); // Manual selection for the graphic lib 
         Engine(const Engine& object) = delete;
         Engine(Engine&& object) = delete;
 

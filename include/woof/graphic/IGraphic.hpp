@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 27/02/2026 by @author Tsukini
 
 File Name:
 ##  @file IGraphic.hpp
@@ -28,9 +28,7 @@ namespace woof { // namespace start
 class IGraphic {
     public:
         // ---------- Pre-Function -------- //
-        virtual bool isload() const noexcept = 0;
-
-        // ------------ Function ---------- //
+        virtual bool isloaded() const noexcept = 0;
 
         // ------------ Operator ---------- //
         IGraphic& operator=(const IGraphic& object) = delete;

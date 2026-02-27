@@ -43,6 +43,7 @@ enum Code {
     Dlsym,
     Dlclose,
     UnknowClassFactory,
+    NoLoadedGraphic,
 };
 
 /* Corresponding exception message for each code */
@@ -52,6 +53,7 @@ inline constexpr const char *Message[] = {
     /* Dlsym */ "Failed to load a function from a dynamic library",
     /* Dlclose */ "Failed to release a loaded dynamic library",
     /* UnknowClassFactory */ "An unknow class name was given to the factory",
+    /* NoLoadedGraphic */ "Wasn't able to load the graphics library",
 };
 
 } // namespace end

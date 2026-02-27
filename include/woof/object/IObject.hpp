@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 27/02/2026 by @author Tsukini
 
 File Name:
 ##  @file IObject.hpp
@@ -34,8 +34,6 @@ namespace woof { // namespace start
 class IObject {
     public:
         // ---------- Pre-Function -------- //
-
-        // ------------ Function ---------- //
 
         // ------------ Operator ---------- //
         IObject& operator=(const IObject& object) = delete;

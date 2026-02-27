@@ -38,10 +38,8 @@ class AGraphic: public woof::IGraphic {
         void* _lib = nullptr;
 
     public:
-        // ---------- Pre-Function -------- //
-
         // ------------ Function ---------- //
-        nodiscard bool isload() const noexcept final {return this->_lib;};
+        nodiscard bool isloaded() const noexcept final {return this->_lib;};
 
         // ------------ Operator ---------- //
         AGraphic& operator=(const AGraphic& object) = delete;
