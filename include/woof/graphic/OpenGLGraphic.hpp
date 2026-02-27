@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 27/02/2026 by @author Tsukini
 
 File Name:
 ##  @file OpenGLGraphic.hpp
@@ -31,7 +31,7 @@ namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class OpenGLGraphic: virtual public woof::AGraphic {
+class OpenGLGraphic: public woof::AGraphic {
     private:
         /* Nothing */
 

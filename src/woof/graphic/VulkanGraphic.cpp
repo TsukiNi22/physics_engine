@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 27/02/2026 by @author Tsukini
 
 File Name:
 ##  @file VulkanGraphic.cpp
@@ -26,7 +26,6 @@ File Description:
 #include <dlfcn.h>
 
 cold woof::VulkanGraphic::VulkanGraphic() noexcept
-: AGraphic()
 {
     this->_lib = dlopen("libvulkan.so.1", RTLD_NOW);
     if (!(this->_lib)) unlikely {

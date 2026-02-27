@@ -11,50 +11,41 @@ Edition:
 ##  @date 27/02/2026 by @author Tsukini
 
 File Name:
-##  @file AGraphic.hpp
+##  @file ObjectFactory.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef AGRAPHIC_H
-    #define AGRAPHIC_H
+#ifndef OBJECTFACTORY_H
+    #define OBJECTFACTORY_H
 
     //----------------------------------------------------------------//
     /* INCLUDE */
 
     /* type */
-    #define _Attribute
-    #include "utils/Utils.hpp" // nodiscard
-    #include "IGraphic.hpp" // woof::IGraphic
+    #include "../object/IObject.hpp"    // woof::IObject
+    #include "AFactory.hpp"             // woof::AFactory
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class AGraphic: public woof::IGraphic {
-    protected:
-        void* _lib = nullptr;
-
+class ObjectFactory: public woof::AFactory<woof::IObject> {
     public:
-        // ---------- Pre-Function -------- //
-
-        // ------------ Function ---------- //
-        nodiscard bool isload() const noexcept final {return this->_lib;};
-
         // ------------ Operator ---------- //
-        AGraphic& operator=(const AGraphic& object) = delete;
-        AGraphic& operator=(AGraphic&& object) = delete;
+        ObjectFactory& operator=(const ObjectFactory& object) = delete;
+        ObjectFactory& operator=(ObjectFactory&& object) = delete;
 
         // ---------- Constructor --------- //
-        AGraphic() = default;
-        AGraphic(const AGraphic& object) = delete;
-        AGraphic(AGraphic&& object) = delete;
+        ObjectFactory() noexcept;
+        ObjectFactory(const ObjectFactory& object) = delete;
+        ObjectFactory(ObjectFactory&& object) = delete;
 
         // ----------- Destructor --------- //
-        ~AGraphic() noexcept;
+        ~ObjectFactory() = default;
 };
 
 } // namespace end
-#endif /* AGRAPHIC_H */
+#endif /* OBJECTFACTORY_H */

@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 27/02/2026 by @author Tsukini
 
 File Name:
 ##  @file AObject.hpp
@@ -31,7 +31,7 @@ namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class AObject: virtual public woof::IObject {
+class AObject: public woof::IObject {
     private:
         /* physics */
         float mass = 1.f; // kg

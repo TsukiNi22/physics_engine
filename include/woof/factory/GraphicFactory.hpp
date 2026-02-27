@@ -11,50 +11,41 @@ Edition:
 ##  @date 27/02/2026 by @author Tsukini
 
 File Name:
-##  @file AGraphic.hpp
+##  @file GraphicFactory.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef AGRAPHIC_H
-    #define AGRAPHIC_H
+#ifndef GRAPHICFACTORY_H
+    #define GRAPHICFACTORY_H
 
     //----------------------------------------------------------------//
     /* INCLUDE */
 
     /* type */
-    #define _Attribute
-    #include "utils/Utils.hpp" // nodiscard
-    #include "IGraphic.hpp" // woof::IGraphic
+    #include "../graphic/IGraphic.hpp"  // woof::IGraphic
+    #include "AFactory.hpp"             // woof::AFactory
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class AGraphic: public woof::IGraphic {
-    protected:
-        void* _lib = nullptr;
-
+class GraphicFactory: public woof::AFactory<woof::IGraphic> {
     public:
-        // ---------- Pre-Function -------- //
-
-        // ------------ Function ---------- //
-        nodiscard bool isload() const noexcept final {return this->_lib;};
-
         // ------------ Operator ---------- //
-        AGraphic& operator=(const AGraphic& object) = delete;
-        AGraphic& operator=(AGraphic&& object) = delete;
+        GraphicFactory& operator=(const GraphicFactory& object) = delete;
+        GraphicFactory& operator=(GraphicFactory&& object) = delete;
 
         // ---------- Constructor --------- //
-        AGraphic() = default;
-        AGraphic(const AGraphic& object) = delete;
-        AGraphic(AGraphic&& object) = delete;
+        GraphicFactory() noexcept;
+        GraphicFactory(const GraphicFactory& object) = delete;
+        GraphicFactory(GraphicFactory&& object) = delete;
 
         // ----------- Destructor --------- //
-        ~AGraphic() noexcept;
+        ~GraphicFactory() = default;
 };
 
 } // namespace end
-#endif /* AGRAPHIC_H */
+#endif /* GRAPHICFACTORY_H */

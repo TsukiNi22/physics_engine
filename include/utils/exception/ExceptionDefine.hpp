@@ -1,6 +1,6 @@
 /**************************************************************\
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 27/02/2026 by @author Tsukini
 
 File Name:
 ##  @file ExceptionDefine.hpp
@@ -42,6 +42,7 @@ enum Code {
     Dlopen,
     Dlsym,
     Dlclose,
+    UnknowClassFactory,
 };
 
 /* Corresponding exception message for each code */
@@ -50,6 +51,7 @@ inline constexpr const char *Message[] = {
     /* Dlopen */ "Failed to load a dynamic library",
     /* Dlsym */ "Failed to load a function from a dynamic library",
     /* Dlclose */ "Failed to release a loaded dynamic library",
+    /* UnknowClassFactory */ "An unknow class name was given to the factory",
 };
 
 } // namespace end

@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 27/02/2026 by @author Tsukini
 
 File Name:
 ##  @file OpenGLGraphic.cpp
@@ -26,7 +26,6 @@ File Description:
 #include <dlfcn.h>
 
 cold woof::OpenGLGraphic::OpenGLGraphic() noexcept
-: AGraphic()
 {
     this->_lib = dlopen("libGL.so.1", RTLD_NOW);
     if (!(this->_lib)) unlikely {

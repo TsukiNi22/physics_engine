@@ -32,6 +32,10 @@ set(SRC
     # Engine
     src/woof/Engine.cpp
 
+    # Factory
+    src/woof/factory/ObjectFactory.cpp
+    src/woof/factory/GraphicFactory.cpp
+
     # Object
 
     # Graphic

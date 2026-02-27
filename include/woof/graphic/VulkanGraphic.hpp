@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 27/02/2026 by @author Tsukini
 
 File Name:
 ##  @file VulkanGraphic.hpp
@@ -33,7 +33,7 @@ namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class VulkanGraphic: virtual public woof::AGraphic {
+class VulkanGraphic: public woof::AGraphic {
     private:
         /* Nothing */
 

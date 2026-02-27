@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 27/02/2026 by @author Tsukini
 
 File Name:
 ##  @file Engine.hpp
@@ -26,7 +26,7 @@ File Description:
 
     /* type */
     #include "graphic/IGraphic.hpp" // woof::IGraphic
-    #include <memory>               // std::unique_ptr
+    #include <memory>               // std::shared_ptr
     #include <string>               // std::string
 
     //----------------------------------------------------------------//
@@ -51,7 +51,7 @@ class Engine {
     private:
         /* global */
         woof::Status _status = woof::Status::Paused;
-        std::unique_ptr<woof::IGraphic> _graphic = nullptr;
+        std::shared_ptr<woof::IGraphic> _graphic = nullptr;
 
     public:
         // ---------- Pre-Function -------- //
@@ -67,8 +67,8 @@ class Engine {
         Engine& operator=(Engine&& object) = delete;
 
         // ---------- Constructor --------- //
-        Engine() noexcept;
-        Engine(std::string graphic_lib) noexcept;
+        Engine() noexcept; // Automatic selection of the graphic lib
+        Engine(std::string graphic_lib) noexcept; // Manual selection for the graphic lib 
         Engine(const Engine& object) = delete;
         Engine(Engine&& object) = delete;
 

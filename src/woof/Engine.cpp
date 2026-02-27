@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 27/02/2026 by @author Tsukini
 
 File Name:
 ##  @file Engine.cpp
@@ -22,6 +22,7 @@ File Description:
 #define _Attribute
 #include "utils/Utils.hpp"
 #include "woof/Engine.hpp"
+#include <memory>
 #include <string>
 
 cold woof::Engine::Engine() noexcept
@@ -31,5 +32,5 @@ cold woof::Engine::Engine() noexcept
 
 cold woof::Engine::Engine(unused std::string graphic_lib) noexcept
 {
-
+    
 }
