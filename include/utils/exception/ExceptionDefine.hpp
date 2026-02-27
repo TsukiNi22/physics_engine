@@ -14,6 +14,13 @@ File Description:
     #define EXCEPTIONDEFINE_H
 
     //----------------------------------------------------------------//
+    /* INCLUDE */
+    
+    /* type */
+    #include <iterator> // std::size
+    #include <cstddef>  // std::size_t
+
+    //----------------------------------------------------------------//
     /* DEFINE */
     
     /* Definition of the different return status */
@@ -44,6 +51,7 @@ enum Code {
     Dlclose,
     UnknowClassFactory,
     NoLoadedGraphic,
+    CODE_SENTINEL // sentinel used for verification
 };
 
 /* Corresponding exception message for each code */
@@ -55,6 +63,9 @@ inline constexpr const char *Message[] = {
     /* UnknowClassFactory */ "An unknow class name was given to the factory",
     /* NoLoadedGraphic */ "Wasn't able to load the graphics library",
 };
+
+// Check at the compile time the correspondece between the message & code
+static_assert(std::size(Message) == static_cast<std::size_t>(utils::exception::Code::CODE_SENTINEL), "The message array doesn't correspond to the available exception codes");
 
 } // namespace end
 #endif /* EXCEPTIONDEFINE_H */

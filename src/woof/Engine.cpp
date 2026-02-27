@@ -31,8 +31,11 @@ File Description:
 static constexpr const char* libs[] = {
     "vulkan",
     "opengl",
-    nullptr,
+    nullptr // sentinel
 };
+
+// Check at the compile time the sentinel existance
+static_assert(libs[std::size(libs) - 1] == nullptr, "libs must be nullptr terminated");
 
 cold woof::Engine::Engine()
 {
