@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
 ##  @file VulkanGraphic.hpp
@@ -25,8 +25,6 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #define _Attribute
-    #include "utils/Utils.hpp" // nodiscard
     #include "AGraphic.hpp" // woof::AGraphic
 
 namespace woof { // namespace start

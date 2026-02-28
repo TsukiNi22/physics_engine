@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
 ##  @file AFactory.hpp
@@ -27,7 +27,7 @@ File Description:
     /* type */
     #define _Exception
     #define _Attribute
-    #include "utils/Utils.hpp"  // utils::exception::CustomException, utils::exception::Type, utils::exception::Code, nodiscard
+    #include "utils/utils.hpp"  // utils::exception::CustomException, utils::exception::Type, utils::exception::Code, nodiscard
     #include "IFactory.hpp"     // woof::IFactory
     #include <unordered_map>    // std::unordered_map
     #include <functional>       // std::functional
