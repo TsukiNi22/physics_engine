@@ -1,6 +1,6 @@
 /**************************************************************\
 Edition:
-##  @date 28/02/2026 by @author Tsukini
+##  @date 01/03/2026 by @author Tsukini
 
 File Name:
 ##  @file ExceptionDefine.hpp
@@ -51,6 +51,7 @@ enum Code {
     Dlsym,
     Dlclose,
     UnknowClassFactory,
+    NoLoadedRender,
     NoLoadedGraphic,
     InvalidObject,
     InvalidAction,
@@ -65,6 +66,7 @@ inline constexpr const char *Message[] = {
     /* Dlsym */ "Failed to load a function from a dynamic library",
     /* Dlclose */ "Failed to release a loaded dynamic library",
     /* UnknowClassFactory */ "An unknow class name was given to the factory",
+    /* NoLoadedRender */ "Wasn't able to load the render library",
     /* NoLoadedGraphic */ "Wasn't able to load the graphics library",
     /* InvalidObject */ "Invalid object used",
     /* InvalidAction */ "Can't execute the given action",

@@ -8,28 +8,50 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 28/02/2026 by @author Tsukini
+##  @date 01/03/2026 by @author Tsukini
 
 File Name:
-##  @file OpenGLGraphic.cpp
+##  @file SDLGraphic.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#define _Exception
-#define _Attribute
-#include "utils/utils.hpp"
-#include "woof/graphic/OpenGLGraphic.hpp"
-#include <iostream>
-#include <dlfcn.h>
+#ifndef SDLGRAPHIC_H
+    #define SDLGRAPHIC_H
 
-cold woof::OpenGLGraphic::OpenGLGraphic() noexcept
-{
-    this->_lib = dlopen("libGL.so.1", RTLD_NOW);
-    if (!(this->_lib)) unlikely {
-        utils::exception::CustomException e(utils::exception::Type::Error, utils::exception::Code::Dlopen, dlerror());
-        std::cout << e.formated() << std::endl;
-    }
-}
+    //----------------------------------------------------------------//
+    /* INCLUDE */
+
+    /* type */
+    #include "AGraphic.hpp" // woof::AGraphic
+
+namespace woof { // namespace start
+//----------------------------------------------------------------//
+/* CLASS */
+
+class SDLGraphic: public woof::AGraphic {
+    private:
+        /* Nothing */
+
+    public:
+        // ---------- Pre-Function -------- //
+
+        // ------------ Function ---------- //
+
+        // ------------ Operator ---------- //
+        SDLGraphic& operator=(const SDLGraphic& object) = delete;
+        SDLGraphic& operator=(SDLGraphic&& object) = delete;
+
+        // ---------- Constructor --------- //
+        SDLGraphic() noexcept;
+        SDLGraphic(const SDLGraphic& object) = delete;
+        SDLGraphic(SDLGraphic&& object) = delete;
+
+        // ----------- Destructor --------- //
+        ~SDLGraphic() = default;
+};
+
+} // namespace end
+#endif /* SDLGRAPHIC_H */

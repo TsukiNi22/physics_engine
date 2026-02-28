@@ -8,30 +8,30 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 28/02/2026 by @author Tsukini
+##  @date 01/03/2026 by @author Tsukini
 
 File Name:
-##  @file VulkanGraphic.hpp
+##  @file VulkanRender.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef VULKANGRAPHIC_H
-    #define VULKANGRAPHIC_H
+#ifndef VULKANRENDER_H
+    #define VULKANRENDER_H
 
     //----------------------------------------------------------------//
     /* INCLUDE */
 
     /* type */
-    #include "AGraphic.hpp" // woof::AGraphic
+    #include "ARender.hpp" // woof::ARender
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class VulkanGraphic: public woof::AGraphic {
+class VulkanRender: public woof::ARender {
     private:
         /* Nothing */
 
@@ -41,17 +41,17 @@ class VulkanGraphic: public woof::AGraphic {
         // ------------ Function ---------- //
 
         // ------------ Operator ---------- //
-        VulkanGraphic& operator=(const VulkanGraphic& object) = delete;
-        VulkanGraphic& operator=(VulkanGraphic&& object) = delete;
+        VulkanRender& operator=(const VulkanRender& object) = delete;
+        VulkanRender& operator=(VulkanRender&& object) = delete;
 
         // ---------- Constructor --------- //
-        VulkanGraphic() noexcept;
-        VulkanGraphic(const VulkanGraphic& object) = delete;
-        VulkanGraphic(VulkanGraphic&& object) = delete;
+        VulkanRender() noexcept;
+        VulkanRender(const VulkanRender& object) = delete;
+        VulkanRender(VulkanRender&& object) = delete;
 
         // ----------- Destructor --------- //
-        ~VulkanGraphic() = default;
+        ~VulkanRender() = default;
 };
 
 } // namespace end
-#endif /* VULKANGRAPHIC_H */
+#endif /* VULKANRENDER_H */

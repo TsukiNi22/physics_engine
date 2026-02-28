@@ -11,37 +11,48 @@ Edition:
 ##  @date 01/03/2026 by @author Tsukini
 
 File Name:
-##  @file IGraphic.hpp
+##  @file ARender.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef IGRAPHIC_H
-    #define IGRAPHIC_H
+#ifndef ARENDER_H
+    #define ARENDER_H
+
+    //----------------------------------------------------------------//
+    /* INCLUDE */
+
+    /* type */
+    #define _Attribute
+    #include "utils/utils.hpp" // nodiscard
+    #include "IRender.hpp" // woof::IRender
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class IGraphic {
+class ARender: public woof::IRender {
+    protected:
+        void* _lib = nullptr;
+
     public:
-        // ---------- Pre-Function -------- //
-        virtual bool isloaded() const noexcept = 0;
+        // ------------ Function ---------- //
+        nodiscard bool isloaded() const noexcept final {return this->_lib;};
 
         // ------------ Operator ---------- //
-        IGraphic& operator=(const IGraphic& object) = delete;
-        IGraphic& operator=(IGraphic&& object) = delete;
+        ARender& operator=(const ARender& object) = delete;
+        ARender& operator=(ARender&& object) = delete;
 
         // ---------- Constructor --------- //
-        IGraphic() = default;
-        IGraphic(const IGraphic& object) = delete;
-        IGraphic(IGraphic&& object) = delete;
+        ARender() = default;
+        ARender(const ARender& object) = delete;
+        ARender(ARender&& object) = delete;
 
         // ----------- Destructor --------- //
-        virtual ~IGraphic() = default;
+        ~ARender() noexcept;
 };
 
 } // namespace end
-#endif /* IGRAPHIC_H */
+#endif /* ARENDER_H */

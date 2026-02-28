@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 28/02/2026 by @author Tsukini
+##  @date 01/03/2026 by @author Tsukini
 
 File Name:
 ##  @file GraphicFactory.cpp
@@ -19,14 +19,12 @@ File Description:
 \**************************************************************/
 
 #include "woof/factory/GraphicFactory.hpp"
-#include "woof/graphic/OpenGLGraphic.hpp"
-#include "woof/graphic/VulkanGraphic.hpp"
+#include "woof/graphic/SDLGraphic.hpp"
 #include <memory>
 
 woof::GraphicFactory::GraphicFactory() noexcept
 {
     this->_registry = {
-        {"opengl",  [](){return std::make_shared<woof::OpenGLGraphic>();}},
-        {"vulkan",  [](){return std::make_shared<woof::VulkanGraphic>();}},
+        {"sdl",  [](){return std::make_shared<woof::SDLGraphic>();}},
     };
 }

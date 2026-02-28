@@ -11,37 +11,24 @@ Edition:
 ##  @date 01/03/2026 by @author Tsukini
 
 File Name:
-##  @file IGraphic.hpp
+##  @file RenderFactory.cpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef IGRAPHIC_H
-    #define IGRAPHIC_H
+#include "woof/factory/RenderFactory.hpp"
+#include "woof/render/SDLRender.hpp"
+#include "woof/render/OpenGLRender.hpp"
+#include "woof/render/VulkanRender.hpp"
+#include <memory>
 
-namespace woof { // namespace start
-//----------------------------------------------------------------//
-/* CLASS */
-
-class IGraphic {
-    public:
-        // ---------- Pre-Function -------- //
-        virtual bool isloaded() const noexcept = 0;
-
-        // ------------ Operator ---------- //
-        IGraphic& operator=(const IGraphic& object) = delete;
-        IGraphic& operator=(IGraphic&& object) = delete;
-
-        // ---------- Constructor --------- //
-        IGraphic() = default;
-        IGraphic(const IGraphic& object) = delete;
-        IGraphic(IGraphic&& object) = delete;
-
-        // ----------- Destructor --------- //
-        virtual ~IGraphic() = default;
-};
-
-} // namespace end
-#endif /* IGRAPHIC_H */
+woof::RenderFactory::RenderFactory() noexcept
+{
+    this->_registry = {
+        {"sdl",  [](){return std::make_shared<woof::SDLRender>();}},
+        {"opengl",  [](){return std::make_shared<woof::OpenGLRender>();}},
+        {"vulkan",  [](){return std::make_shared<woof::VulkanRender>();}},
+    };
+}

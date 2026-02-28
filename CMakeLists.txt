@@ -36,14 +36,20 @@ set(SRC
     # Factory
     src/woof/factory/ObjectFactory.cpp
     src/woof/factory/GraphicFactory.cpp
+    src/woof/factory/RenderFactory.cpp
 
     # Object
     src/woof/object/ShapeDescriptor.cpp
 
     # Graphic
     src/woof/graphic/AGraphic.cpp
-    src/woof/graphic/OpenGLGraphic.cpp
-    src/woof/graphic/VulkanGraphic.cpp
+    src/woof/graphic/SDLGraphic.cpp
+
+    # Render
+    src/woof/render/ARender.cpp
+    src/woof/render/SDLRender.cpp
+    src/woof/render/OpenGLRender.cpp
+    src/woof/render/VulkanRender.cpp
 )
 add_library(${TARGET} STATIC ${SRC})
 #add_library(${TARGET} SHARED ${SRC})

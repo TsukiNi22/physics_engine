@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 28/02/2026 by @author Tsukini
+##  @date 01/03/2026 by @author Tsukini
 
 File Name:
 ##  @file Engine.cpp
@@ -24,6 +24,7 @@ File Description:
 #include "utils/utils.hpp"
 #include "woof/Engine.hpp"
 #include "woof/factory/GraphicFactory.hpp"
+#include "woof/factory/RenderFactory.hpp"
 #include "woof/object/IObject.hpp"
 #include "woof/object/ActorObject.hpp"
 #include "woof/object/ObjectObject.hpp"
@@ -38,44 +39,78 @@ File Description:
 #include <string>
 
 // Dynamic library to try in priority order
-static constexpr const char* libs[] = {
-    "vulkan",
+static constexpr const char* graphic_libs[] = {
+    "sdl",
+    nullptr // sentinel
+};
+static constexpr const char* render_libs[] = {
+    "sdl",
     "opengl",
+    "vulkan",
     nullptr // sentinel
 };
 
 // Check at the compile time the sentinel existance
-static_assert(libs[std::size(libs) - 1] == nullptr, "libs must be nullptr terminated");
+static_assert(graphic_libs[std::size(graphic_libs) - 1] == nullptr, "graphic_libs must be nullptr terminated");
+static_assert(render_libs[std::size(render_libs) - 1] == nullptr, "render_libs must be nullptr terminated");
 
 cold woof::Engine::Engine(std::size_t verbose)
 : _verbose{verbose}
 {
-    woof::GraphicFactory factory;
+    woof::GraphicFactory graphicFactory;
+    woof::RenderFactory renderFactory;
 
     // Try to load the graphic lib and continue will it's failed
-    for (std::size_t i = 0; libs[i]; i++) {
-        this->_graphic = factory.create(libs[i]);
+    for (std::size_t i = 0; graphic_libs[i]; i++) {
+        this->_graphic = graphicFactory.create(graphic_libs[i]);
         if (this->_graphic->isloaded()) {
-            if (this->_verbose.load() >= 1) std::cout << utils::write::strong() << libs[i] << utils::write::reset() << ": dynamic library loaded with success" << std::endl;
-            return;
+            if (this->_verbose.load() >= 1) std::cout << utils::write::strong() << graphic_libs[i] << utils::write::reset() << ": graphic dynamic library loaded with success" << std::endl;
+            break;
         }
     }
-
     // No graphic was succefully loaded
-    throw utils::exception::ErrorException(utils::exception::Code::NoLoadedGraphic);
-}
-
-cold woof::Engine::Engine(std::string graphic_lib, std::size_t verbose)
-: _verbose{verbose}
-{
-    woof::GraphicFactory factory;
-    this->_graphic = factory.create(graphic_lib);
-
-    // Check if the graphic was loaded
-    if (!(this->_graphic->isloaded()))
+    if (!(this->_graphic) || !(this->_graphic->isloaded()))
         throw utils::exception::ErrorException(utils::exception::Code::NoLoadedGraphic);
 
-    if (this->_verbose.load() >= 1) std::cout << utils::write::strong() << graphic_lib << utils::write::reset() << ": dynamic library loaded with success" << std::endl;
+    // Try to load the render lib and continue will it's failed
+    for (std::size_t i = 0; render_libs[i]; i++) {
+        this->_render = renderFactory.create(render_libs[i]);
+        if (this->_render->isloaded()) {
+            if (this->_verbose.load() >= 1) std::cout << utils::write::strong() << render_libs[i] << utils::write::reset() << ": render dynamic library loaded with success" << std::endl;
+            break;
+        }
+    }
+    // Check if the render was loaded
+    if (!(this->_render) || !(this->_render->isloaded()))
+        throw utils::exception::ErrorException(utils::exception::Code::NoLoadedRender);
+
+}
+
+cold woof::Engine::Engine(std::string render_lib, std::size_t verbose)
+: _verbose{verbose}
+{
+    woof::GraphicFactory graphicFactory;
+    woof::RenderFactory renderFactory;
+
+    // Try to load the graphic lib and continue will it's failed
+    for (std::size_t i = 0; graphic_libs[i]; i++) {
+        this->_graphic = graphicFactory.create(graphic_libs[i]);
+        if (this->_graphic->isloaded()) {
+            if (this->_verbose.load() >= 1) std::cout << utils::write::strong() << graphic_libs[i] << utils::write::reset() << ": graphic dynamic library loaded with success" << std::endl;
+            break;
+        }
+    }
+    // Check if the graphic was loaded
+    if (!(this->_graphic) || !(this->_graphic->isloaded()))
+        throw utils::exception::ErrorException(utils::exception::Code::NoLoadedGraphic);
+
+    // Try to load the render lib selected
+    this->_render = renderFactory.create(render_lib);
+    // Check if the render was loaded
+    if (!(this->_render) || this->_render->isloaded())
+        throw utils::exception::ErrorException(utils::exception::Code::NoLoadedRender);
+
+    if (this->_verbose.load() >= 1) std::cout << utils::write::strong() << render_lib << utils::write::reset() << ": dynamic library loaded with success" << std::endl;
 }
 
 void woof::Engine::link(const std::shared_ptr<woof::IObject>& object)

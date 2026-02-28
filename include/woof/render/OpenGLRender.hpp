@@ -11,37 +11,47 @@ Edition:
 ##  @date 01/03/2026 by @author Tsukini
 
 File Name:
-##  @file IGraphic.hpp
+##  @file OpenGLRender.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef IGRAPHIC_H
-    #define IGRAPHIC_H
+#ifndef OPENGLRENDER_H
+    #define OPENGLRENDER_H
+
+    //----------------------------------------------------------------//
+    /* INCLUDE */
+
+    /* type */
+    #include "ARender.hpp" // woof::ARender
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class IGraphic {
+class OpenGLRender: public woof::ARender {
+    private:
+        /* Nothing */
+
     public:
         // ---------- Pre-Function -------- //
-        virtual bool isloaded() const noexcept = 0;
+
+        // ------------ Function ---------- //
 
         // ------------ Operator ---------- //
-        IGraphic& operator=(const IGraphic& object) = delete;
-        IGraphic& operator=(IGraphic&& object) = delete;
+        OpenGLRender& operator=(const OpenGLRender& object) = delete;
+        OpenGLRender& operator=(OpenGLRender&& object) = delete;
 
         // ---------- Constructor --------- //
-        IGraphic() = default;
-        IGraphic(const IGraphic& object) = delete;
-        IGraphic(IGraphic&& object) = delete;
+        OpenGLRender() noexcept;
+        OpenGLRender(const OpenGLRender& object) = delete;
+        OpenGLRender(OpenGLRender&& object) = delete;
 
         // ----------- Destructor --------- //
-        virtual ~IGraphic() = default;
+        ~OpenGLRender() = default;
 };
 
 } // namespace end
-#endif /* IGRAPHIC_H */
+#endif /* OPENGLRENDER_H */

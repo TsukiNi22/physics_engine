@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 28/02/2026 by @author Tsukini
+##  @date 01/03/2026 by @author Tsukini
 
 File Name:
 ##  @file Engine.hpp
@@ -28,6 +28,7 @@ File Description:
     #define _Attribute
     #include "utils/utils.hpp"      // nodiscard
     #include "graphic/IGraphic.hpp" // woof::IGraphic
+    #include "render/IRender.hpp"   // woof::IRender
     #include "object/IObject.hpp"   // woof::IObject
     #include <cstddef>              // std::size_t
     #include <chrono>               // std::chrono::milliseconds
@@ -74,6 +75,7 @@ class Engine {
         /* global */
         std::atomic<woof::Status> _status{woof::Status::Paused};
         std::shared_ptr<woof::IGraphic> _graphic = nullptr;
+        std::shared_ptr<woof::IRender> _render = nullptr;
 
         /* objects */
         std::vector<std::shared_ptr<woof::IObject>> _global; // Store a copy of all object of any type accepted
@@ -105,7 +107,7 @@ class Engine {
 
         // ---------- Constructor --------- //
         Engine(std::size_t verbose = 0); // Automatic selection of the graphic lib
-        Engine(std::string graphic_lib, std::size_t verbose = 0); // Manual selection for the graphic lib 
+        Engine(std::string render_lib, std::size_t verbose = 0); // Manual selection for the render lib 
         Engine(const Engine& object) = delete;
         Engine(Engine&& object) = delete;
 

@@ -8,50 +8,27 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 01/03/2026 by @author Tsukini
 
 File Name:
-##  @file OpenGLGraphic.hpp
+##  @file ARender.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef OPENGLGRAPHIC_H
-    #define OPENGLGRAPHIC_H
+#define _Exception
+#define _Attribute
+#include "utils/utils.hpp"
+#include "woof/render/ARender.hpp"
+#include <iostream>
+#include <dlfcn.h>
 
-    //----------------------------------------------------------------//
-    /* INCLUDE */
-
-    /* type */
-    #include "AGraphic.hpp" // woof::AGraphic
-
-namespace woof { // namespace start
-//----------------------------------------------------------------//
-/* CLASS */
-
-class OpenGLGraphic: public woof::AGraphic {
-    private:
-        /* Nothing */
-
-    public:
-        // ---------- Pre-Function -------- //
-
-        // ------------ Function ---------- //
-
-        // ------------ Operator ---------- //
-        OpenGLGraphic& operator=(const OpenGLGraphic& object) = delete;
-        OpenGLGraphic& operator=(OpenGLGraphic&& object) = delete;
-
-        // ---------- Constructor --------- //
-        OpenGLGraphic() noexcept;
-        OpenGLGraphic(const OpenGLGraphic& object) = delete;
-        OpenGLGraphic(OpenGLGraphic&& object) = delete;
-
-        // ----------- Destructor --------- //
-        ~OpenGLGraphic() = default;
-};
-
-} // namespace end
-#endif /* OPENGLGRAPHIC_H */
+cold woof::ARender::~ARender() noexcept
+{
+    if (this->_lib && OK != dlclose(this->_lib)) unlikely {
+        utils::exception::CustomException e(utils::exception::Type::Error, utils::exception::Code::Dlclose, dlerror());
+        std::cout << e.formated() << std::endl;
+    }
+}

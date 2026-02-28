@@ -11,37 +11,47 @@ Edition:
 ##  @date 01/03/2026 by @author Tsukini
 
 File Name:
-##  @file IGraphic.hpp
+##  @file SDLRender.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef IGRAPHIC_H
-    #define IGRAPHIC_H
+#ifndef SDLRENDER_H
+    #define SDLRENDER_H
+
+    //----------------------------------------------------------------//
+    /* INCLUDE */
+
+    /* type */
+    #include "ARender.hpp" // woof::ARender
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class IGraphic {
+class SDLRender: public woof::ARender {
+    private:
+        /* Nothing */
+
     public:
         // ---------- Pre-Function -------- //
-        virtual bool isloaded() const noexcept = 0;
+
+        // ------------ Function ---------- //
 
         // ------------ Operator ---------- //
-        IGraphic& operator=(const IGraphic& object) = delete;
-        IGraphic& operator=(IGraphic&& object) = delete;
+        SDLRender& operator=(const SDLRender& object) = delete;
+        SDLRender& operator=(SDLRender&& object) = delete;
 
         // ---------- Constructor --------- //
-        IGraphic() = default;
-        IGraphic(const IGraphic& object) = delete;
-        IGraphic(IGraphic&& object) = delete;
+        SDLRender() noexcept;
+        SDLRender(const SDLRender& object) = delete;
+        SDLRender(SDLRender&& object) = delete;
 
         // ----------- Destructor --------- //
-        virtual ~IGraphic() = default;
+        ~SDLRender() = default;
 };
 
 } // namespace end
-#endif /* IGRAPHIC_H */
+#endif /* SDLRENDER_H */
