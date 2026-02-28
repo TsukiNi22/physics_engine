@@ -126,4 +126,8 @@ void woof::Engine::stop() noexcept
 
 hot void woof::Engine::tick()
 {
+    // 1 - object physic computing
+    // 2 - handling input from actor
+    // 3 - updating object
+    // 4 - rendering object
 }

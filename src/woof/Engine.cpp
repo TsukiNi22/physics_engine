@@ -48,8 +48,8 @@ static constexpr const char* libs[] = {
 static_assert(libs[std::size(libs) - 1] == nullptr, "libs must be nullptr terminated");
 
 cold woof::Engine::Engine(std::size_t verbose)
+: _verbose{verbose}
 {
-    this->_verbose.store(verbose); // Init the verbose level
     woof::GraphicFactory factory;
 
     // Try to load the graphic lib and continue will it's failed
@@ -66,8 +66,8 @@ cold woof::Engine::Engine(std::size_t verbose)
 }
 
 cold woof::Engine::Engine(std::string graphic_lib, std::size_t verbose)
+: _verbose{verbose}
 {
-    this->_verbose.store(verbose); // Init the verbose level
     woof::GraphicFactory factory;
     this->_graphic = factory.create(graphic_lib);
 
