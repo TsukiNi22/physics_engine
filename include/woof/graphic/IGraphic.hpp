@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
 ##  @file IGraphic.hpp
@@ -40,7 +40,7 @@ class IGraphic {
         IGraphic(IGraphic&& object) = delete;
 
         // ----------- Destructor --------- //
-        virtual ~IGraphic() = 0;
+        virtual ~IGraphic() = default;
 };
 
 } // namespace end

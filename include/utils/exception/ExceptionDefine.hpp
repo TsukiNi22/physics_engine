@@ -1,6 +1,6 @@
 /**************************************************************\
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
 ##  @file ExceptionDefine.hpp
@@ -46,22 +46,26 @@ enum Type {
 /* Definition of the different exception code */
 enum Code {
     Undefined = 0,
+    InvalidPtr,
     Dlopen,
     Dlsym,
     Dlclose,
     UnknowClassFactory,
     NoLoadedGraphic,
+    InvalidObject,
     CODE_SENTINEL // sentinel used for verification
 };
 
 /* Corresponding exception message for each code */
 inline constexpr const char *Message[] = {
     /* Undefined */ "An undefined error has occured",
+    /* InvalidPtr */ "Invalid pointer used (null)",
     /* Dlopen */ "Failed to load a dynamic library",
     /* Dlsym */ "Failed to load a function from a dynamic library",
     /* Dlclose */ "Failed to release a loaded dynamic library",
     /* UnknowClassFactory */ "An unknow class name was given to the factory",
     /* NoLoadedGraphic */ "Wasn't able to load the graphics library",
+    /* InvalidObject */ "Invalid object used",
 };
 
 // Check at the compile time the correspondece between the message & code

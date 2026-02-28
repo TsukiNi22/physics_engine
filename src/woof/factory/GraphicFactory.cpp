@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
 ##  @file GraphicFactory.cpp
@@ -21,6 +21,7 @@ File Description:
 #include "woof/factory/GraphicFactory.hpp"
 #include "woof/graphic/OpenGLGraphic.hpp"
 #include "woof/graphic/VulkanGraphic.hpp"
+#include <memory>
 
 woof::GraphicFactory::GraphicFactory() noexcept
 {

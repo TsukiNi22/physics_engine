@@ -24,6 +24,7 @@ File Description:
 #include "woof/object/ActorObject.hpp"
 #include "woof/object/ObjectObject.hpp"
 #include "woof/object/PropObject.hpp"
+#include <memory>
 
 woof::ObjectFactory::ObjectFactory() noexcept
 {
