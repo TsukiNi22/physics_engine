@@ -31,6 +31,7 @@ add_compile_options(
 set(SRC
     # Engine
     src/woof/Engine.cpp
+    src/woof/engine/run.cpp
 
     # Factory
     src/woof/factory/ObjectFactory.cpp

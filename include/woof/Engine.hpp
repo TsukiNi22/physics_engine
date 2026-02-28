@@ -31,6 +31,7 @@ File Description:
     #include <memory>               // std::shared_ptr
     #include <vector>               // std::vector
     #include <string>               // std::string
+    #include <atomic>               // std::atomic
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
@@ -38,6 +39,7 @@ namespace woof { // namespace start
 enum Status {
     Running,
     Paused,
+    Interrupted,
     Stopped,
 };
 
@@ -57,7 +59,7 @@ class Engine {
         // ---------- Verbose -------- //
 
         /* global */
-        woof::Status _status = woof::Status::Paused;
+        std::atomic<woof::Status> _status{woof::Status::Paused};
         std::shared_ptr<woof::IGraphic> _graphic = nullptr;
 
         /* objects */
@@ -72,9 +74,10 @@ class Engine {
         void unlink(const std::shared_ptr<woof::IObject>& object); // Remove the link of an object from the engine
 
         /* in a separated thread */
-        void start(); // Start the engine
-        void interrupt(); // Interrupt the engine (let the display open)
-        void stop(); // Stop the engine (close the display)
+        void start(); // Start the engine (open the display)
+        void pause(std::size_t ms = 0); // Pause the engine with or without a timer before restarting (let the display open)
+        void interrupt(); // Interrupt the engine (close the display)
+        void stop(); // Stop the engine (can't be restarted)
 
         /* in the same process */
         void tick(); // Simulate one tick
