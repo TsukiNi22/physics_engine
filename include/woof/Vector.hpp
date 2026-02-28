@@ -8,48 +8,38 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
-##  @file IFactory.hpp
+##  @file Vector.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef IFACTORY_H
-    #define IFACTORY_H
-
-    //----------------------------------------------------------------//
-    /* INCLUDE */
-
-    /* type */
-    #include <memory>           // std::shared_ptr
-    #include <string>           // std::string
+#ifndef VECTOR_H
+    #define VECTOR_H
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
-/* CLASS */
+/* TYPEDEF */
 
-template<typename T, typename... Args>
-class IFactory {
-    public:
-        // ---------- Pre-Function -------- //
-        virtual std::shared_ptr<T> create(const std::string& type, Args... args) = 0;
+struct vector2 {
+    /* data */
+    float x = 0.f;
+    float y = 0.f;
 
-        // ------------ Operator ---------- //
-        IFactory& operator=(const IFactory& object) = delete;
-        IFactory& operator=(IFactory&& object) = delete;
-
-        // ---------- Constructor --------- //
-        IFactory() = default;
-        IFactory(const IFactory& object) = delete;
-        IFactory(IFactory&& object) = delete;
-
-        // ----------- Destructor --------- //
-        ~IFactory() = default;
+    // ------------ Operator ---------- //
+    vector2 operator-() const {return {-x, -y};};
+    vector2 operator*(float f) const {return {x * f, y * f};}
+    vector2 operator*(const vector2& v) const {return {x * v.x, y * v.y};}
+    vector2 operator/(float f) const {return {x / f, y / f};}
+    vector2 operator/(const vector2& v) const {return {x / v.x, y / v.y};}
+    vector2 operator+(float f) const {return {x + f, y + f};}
+    vector2 operator+(const vector2& v) const {return {x + v.x, y + v.y};}
+    vector2& operator+=(const vector2& v) {x += v.x; y += v.y; return *this;}
 };
 
 } // namespace end
-#endif /* IFACTORY_H */
+#endif /* VECTOR_H */

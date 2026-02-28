@@ -23,6 +23,7 @@ File Description:
 #include "utils/Utils.hpp"
 #include "woof/Engine.hpp"
 #include "woof/factory/GraphicFactory.hpp"
+#include <iterator>
 #include <cstddef>
 #include <memory>
 #include <string>

@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
 ##  @file AObject.hpp
@@ -25,14 +25,19 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include "IObject.hpp" // woof::IObject
+    #include "ShapeDescriptor.hpp"  // woof::ShapeDescriptor, woof::ShapeId
+    #include "IObject.hpp"          // woof::IObject
+    #include <vector>               // std::vector
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
 class AObject: public woof::IObject {
-    private:
+    protected:
+        /* shape data */
+        woof::ShapeDescriptor _sd;
+
         /* physics */
         float mass = 1.f; // kg
         vector2 velocity{0.f, 0.f};
@@ -45,18 +50,25 @@ class AObject: public woof::IObject {
         bool fill = true;
 
     public:
+        /* status */
+        //bool hitbox = true;     // limited to: Actor, Object, Prop
+        //bool input = true;      // limited to: Actor
+        //bool simulated = true;  // limited to: Actor, Object
+        //bool rendered = true;   // limited to: Actor, Object, Prop
+        int layout = 0; // display order
+
         // ---------- Pre-Function -------- //
 
         // ------------ Function ---------- //
 
         // ------------ Operator ---------- //
-        AObject& operator=(const AObject& object) = delete;
-        AObject& operator=(AObject&& object) = delete;
+        AObject& operator=(const AObject& object) = default;
+        AObject& operator=(AObject&& object) = default;
 
         // ---------- Constructor --------- //
-        AObject() = default;
-        AObject(const AObject& object) = delete;
-        AObject(AObject&& object) = delete;
+        AObject(const woof::ShapeDescriptor& sd) noexcept: _sd{sd} {};
+        AObject(const AObject& object) = default;
+        AObject(AObject&& object) = default;
 
         // ----------- Destructor --------- //
         ~AObject() = default;

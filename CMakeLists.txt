@@ -37,6 +37,7 @@ set(SRC
     src/woof/factory/GraphicFactory.cpp
 
     # Object
+    src/woof/object/ShapeDescriptor.cpp
 
     # Graphic
     src/woof/graphic/AGraphic.cpp

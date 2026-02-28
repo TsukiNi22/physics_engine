@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
 ##  @file ObjectFactory.hpp
@@ -25,14 +25,15 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include "../object/IObject.hpp"    // woof::IObject
-    #include "AFactory.hpp"             // woof::AFactory
+    #include "../object/ShapeDescriptor.hpp"    // woof::ShapeDescriptor
+    #include "../object/IObject.hpp"            // woof::IObject
+    #include "AFactory.hpp"                     // woof::AFactory
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class ObjectFactory: public woof::AFactory<woof::IObject> {
+class ObjectFactory: public woof::AFactory<woof::IObject, const woof::ShapeDescriptor&> {
     public:
         // ------------ Operator ---------- //
         ObjectFactory& operator=(const ObjectFactory& object) = delete;

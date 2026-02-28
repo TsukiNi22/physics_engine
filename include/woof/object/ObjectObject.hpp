@@ -8,48 +8,56 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
-##  @file IFactory.hpp
+##  @file ObjectObject.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef IFACTORY_H
-    #define IFACTORY_H
+#ifndef OBJECTOBJECT_H
+    #define OBJECTOBJECT_H
 
     //----------------------------------------------------------------//
     /* INCLUDE */
 
     /* type */
-    #include <memory>           // std::shared_ptr
-    #include <string>           // std::string
+    #include "ShapeDescriptor.hpp"  // woof::ShapeDescriptor
+    #include "AObject.hpp"          // woof::AObject
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-template<typename T, typename... Args>
-class IFactory {
+class ObjectObject: public woof::AObject {
+    private:
+        /* Nothing */
+
     public:
+        /* status */
+        bool hitbox = true;     // can be hit?
+        bool simulated = true;  // physic simulated?
+        bool rendered = true;   // is displayed?
+
         // ---------- Pre-Function -------- //
-        virtual std::shared_ptr<T> create(const std::string& type, Args... args) = 0;
+
+        // ------------ Function ---------- //
 
         // ------------ Operator ---------- //
-        IFactory& operator=(const IFactory& object) = delete;
-        IFactory& operator=(IFactory&& object) = delete;
+        ObjectObject& operator=(const ObjectObject& object) = default;
+        ObjectObject& operator=(ObjectObject&& object) = default;
 
         // ---------- Constructor --------- //
-        IFactory() = default;
-        IFactory(const IFactory& object) = delete;
-        IFactory(IFactory&& object) = delete;
+        ObjectObject(const woof::ShapeDescriptor& sd) noexcept: woof::AObject(sd) {};
+        ObjectObject(const ObjectObject& object) = default;
+        ObjectObject(ObjectObject&& object) = default;
 
         // ----------- Destructor --------- //
-        ~IFactory() = default;
+        ~ObjectObject() = default;
 };
 
 } // namespace end
-#endif /* IFACTORY_H */
+#endif /* OBJECTOBJECT_H */

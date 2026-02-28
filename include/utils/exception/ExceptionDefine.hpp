@@ -15,7 +15,7 @@ File Description:
 
     //----------------------------------------------------------------//
     /* INCLUDE */
-    
+
     /* type */
     #include <iterator> // std::size
     #include <cstddef>  // std::size_t

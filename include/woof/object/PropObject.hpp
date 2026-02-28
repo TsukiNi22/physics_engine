@@ -8,48 +8,55 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
-##  @file IFactory.hpp
+##  @file PropObject.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef IFACTORY_H
-    #define IFACTORY_H
+#ifndef PROPOBJECT_H
+    #define PROPOBJECT_H
 
     //----------------------------------------------------------------//
     /* INCLUDE */
 
     /* type */
-    #include <memory>           // std::shared_ptr
-    #include <string>           // std::string
+    #include "ShapeDescriptor.hpp"  // woof::ShapeDescriptor
+    #include "AObject.hpp"          // woof::AObject
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-template<typename T, typename... Args>
-class IFactory {
+class PropObject: public woof::AObject {
+    private:
+        /* Nothing */
+
     public:
+        /* status */
+        bool hitbox = true;     // can be hit?
+        bool rendered = true;   // is displayed?
+
         // ---------- Pre-Function -------- //
-        virtual std::shared_ptr<T> create(const std::string& type, Args... args) = 0;
+
+        // ------------ Function ---------- //
 
         // ------------ Operator ---------- //
-        IFactory& operator=(const IFactory& object) = delete;
-        IFactory& operator=(IFactory&& object) = delete;
+        PropObject& operator=(const PropObject& object) = default;
+        PropObject& operator=(PropObject&& object) = default;
 
         // ---------- Constructor --------- //
-        IFactory() = default;
-        IFactory(const IFactory& object) = delete;
-        IFactory(IFactory&& object) = delete;
+        PropObject(const woof::ShapeDescriptor& sd) noexcept: woof::AObject(sd) {};
+        PropObject(const PropObject& object) = default;
+        PropObject(PropObject&& object) = default;
 
         // ----------- Destructor --------- //
-        ~IFactory() = default;
+        ~PropObject() = default;
 };
 
 } // namespace end
-#endif /* IFACTORY_H */
+#endif /* PROPOBJECT_H */

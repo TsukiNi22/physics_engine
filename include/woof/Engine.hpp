@@ -47,12 +47,18 @@ class Engine {
         woof::Status _status = woof::Status::Paused;
         std::shared_ptr<woof::IGraphic> _graphic = nullptr;
 
+        // ---------- Pre-Function -------- //
+        //void draw(const std::shared_ptr<woof::IObject>& object); // draw a given object
+
     public:
         // ---------- Pre-Function -------- //
-        /* status edition */
+        /* in a separated thread */
         void start(); // Start the engine
-        void interrupt(); // Interrupt the engine (can be restarted with start)
-        void stop(); // Stop the engine
+        void interrupt(); // Interrupt the engine (let the display open)
+        void stop(); // Stop the engine (close the display)
+
+        /* in the same process */
+        void tick(); // Simulate one tick
 
         // ------------ Function ---------- //
 

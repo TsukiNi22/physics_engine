@@ -8,48 +8,57 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
-##  @file IFactory.hpp
+##  @file ActorObject.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef IFACTORY_H
-    #define IFACTORY_H
+#ifndef ACTOROBJECT_H
+    #define ACTOROBJECT_H
 
     //----------------------------------------------------------------//
     /* INCLUDE */
 
     /* type */
-    #include <memory>           // std::shared_ptr
-    #include <string>           // std::string
+    #include "ShapeDescriptor.hpp"  // woof::ShapeDescriptor
+    #include "AObject.hpp"          // woof::AObject
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-template<typename T, typename... Args>
-class IFactory {
+class ActorObject: public woof::AObject {
+    private:
+        /* Nothing */
+
     public:
+        /* status */
+        bool hitbox = true;     // can be hit?
+        bool input = true;      // take input?
+        bool simulated = true;  // physic simulated?
+        bool rendered = true;   // is displayed?
+
         // ---------- Pre-Function -------- //
-        virtual std::shared_ptr<T> create(const std::string& type, Args... args) = 0;
+
+        // ------------ Function ---------- //
 
         // ------------ Operator ---------- //
-        IFactory& operator=(const IFactory& object) = delete;
-        IFactory& operator=(IFactory&& object) = delete;
+        ActorObject& operator=(const ActorObject& object) = default;
+        ActorObject& operator=(ActorObject&& object) = default;
 
         // ---------- Constructor --------- //
-        IFactory() = default;
-        IFactory(const IFactory& object) = delete;
-        IFactory(IFactory&& object) = delete;
+        ActorObject(const woof::ShapeDescriptor& sd) noexcept: woof::AObject(sd) {};
+        ActorObject(const ActorObject& object) = default;
+        ActorObject(ActorObject&& object) = default;
 
         // ----------- Destructor --------- //
-        ~IFactory() = default;
+        ~ActorObject() = default;
 };
 
 } // namespace end
-#endif /* IFACTORY_H */
+#endif /* ACTOROBJECT_H */

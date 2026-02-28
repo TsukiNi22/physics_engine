@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
 ##  @file IObject.hpp
@@ -21,12 +21,6 @@ File Description:
 #ifndef IOBJECT_H
     #define IOBJECT_H
 
-    //----------------------------------------------------------------//
-    /* INCLUDE */
-
-    /* type */
-    #include <iostream>
-
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
@@ -36,13 +30,13 @@ class IObject {
         // ---------- Pre-Function -------- //
 
         // ------------ Operator ---------- //
-        IObject& operator=(const IObject& object) = delete;
-        IObject& operator=(IObject&& object) = delete;
+        IObject& operator=(const IObject& object) = default;
+        IObject& operator=(IObject&& object) = default;
 
         // ---------- Constructor --------- //
         IObject() = default;
-        IObject(const IObject& object) = delete;
-        IObject(IObject&& object) = delete;
+        IObject(const IObject& object) = default;
+        IObject(IObject&& object) = default;
 
         // ----------- Destructor --------- //
         virtual ~IObject() = 0;

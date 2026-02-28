@@ -8,48 +8,38 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
-##  @file IFactory.hpp
+##  @file engine.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef IFACTORY_H
-    #define IFACTORY_H
+#ifndef ENGINE_INCLUDE_H
+    #define ENGINE_INCLUDE_H
 
     //----------------------------------------------------------------//
     /* INCLUDE */
 
-    /* type */
-    #include <memory>           // std::shared_ptr
-    #include <string>           // std::string
+    /* global */
+    #include "woof/Engine.hpp"
+    #include "woof/Vector.hpp"
 
-namespace woof { // namespace start
-//----------------------------------------------------------------//
-/* CLASS */
+    /* factory */
+    #include "woof/factory/IFactory.hpp"
+    #include "woof/factory/AFactory.hpp"
+    #include "woof/factory/GraphicFactory.hpp"
+    #include "woof/factory/ObjectFactory.hpp"
 
-template<typename T, typename... Args>
-class IFactory {
-    public:
-        // ---------- Pre-Function -------- //
-        virtual std::shared_ptr<T> create(const std::string& type, Args... args) = 0;
+    /* object */
+    #include "woof/object/ShapeDescriptor.hpp"
+    #include "woof/object/IObject.hpp"
+    #include "woof/object/AObject.hpp"
+    #include "woof/object/ActorObject.hpp"
+    #include "woof/object/ObjectObject.hpp"
+    #include "woof/object/PropObject.hpp"
 
-        // ------------ Operator ---------- //
-        IFactory& operator=(const IFactory& object) = delete;
-        IFactory& operator=(IFactory&& object) = delete;
-
-        // ---------- Constructor --------- //
-        IFactory() = default;
-        IFactory(const IFactory& object) = delete;
-        IFactory(IFactory&& object) = delete;
-
-        // ----------- Destructor --------- //
-        ~IFactory() = default;
-};
-
-} // namespace end
-#endif /* IFACTORY_H */
+#endif /* ENGINE_INCLUDE_H */

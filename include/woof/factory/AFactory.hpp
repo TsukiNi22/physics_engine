@@ -38,19 +38,19 @@ namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-template<typename T>
-class AFactory: public woof::IFactory<T> {
+template<typename T, typename... Args>
+class AFactory: public woof::IFactory<T, Args...> {
     protected:
-        std::unordered_map<std::string, std::function<std::shared_ptr<T>()>> _registry;
+        std::unordered_map<std::string, std::function<std::shared_ptr<T>(Args...)>> _registry;
 
     public:
         // ------------ Function ---------- //
-        nodiscard std::shared_ptr<T> create(const std::string& type) final
+        nodiscard std::shared_ptr<T> create(const std::string& type, Args... args) final
         {
             // Try to find a valid creation function for the type
             auto it = this->_registry.find(type);
             if (it != this->_registry.end())
-                return it->second();
+                return it->second(std::forward<Args>(args)...);
 
             // Unknow type, not in the map
             throw utils::exception::CustomException(utils::exception::Type::Error, utils::exception::Code::UnknowClassFactory, type);
