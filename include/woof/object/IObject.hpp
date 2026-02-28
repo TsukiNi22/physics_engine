@@ -39,7 +39,7 @@ class IObject {
         IObject(IObject&& object) = default;
 
         // ----------- Destructor --------- //
-        virtual ~IObject() = 0;
+        virtual ~IObject() = default;
 };
 
 } // namespace end

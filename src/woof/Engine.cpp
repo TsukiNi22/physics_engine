@@ -73,6 +73,8 @@ cold woof::Engine::Engine(std::string graphic_lib, std::size_t verbose)
     // Check if the graphic was loaded
     if (!(this->_graphic->isloaded()))
         throw utils::exception::ErrorException(utils::exception::Code::NoLoadedGraphic);
+
+    if (this->_verbose >= 1) std::cout << strong << graphic_lib << reset << ": dynamic library loaded with success" << std::endl;
 }
 
 void woof::Engine::link(const std::shared_ptr<woof::IObject>& object)
@@ -87,8 +89,11 @@ void woof::Engine::link(const std::shared_ptr<woof::IObject>& object)
     else if (std::dynamic_pointer_cast<woof::PropObject>(object))     _prop.push_back(object);
     
     // Invalid object given
-    else
+    else unlikely {
         throw utils::exception::ErrorException(utils::exception::Code::InvalidObject);
+    }
+
+    if (this->_verbose >= 2) std::cout << strong << object.get() << reset << ": object linked to (" << this << ")" << std::endl;
 }
 
 void woof::Engine::unlink(const std::shared_ptr<woof::IObject>& object)
@@ -109,6 +114,9 @@ void woof::Engine::unlink(const std::shared_ptr<woof::IObject>& object)
     else if (std::dynamic_pointer_cast<woof::PropObject>(object))     removeObject(_prop);
 
     // Invalid object given
-    else
+    else unlikely {
         throw utils::exception::ErrorException(utils::exception::Code::InvalidObject);
+    }
+
+    if (this->_verbose >= 2) std::cout << strong << object.get() << reset << ": object unlinked from (" << this << ")" << std::endl;
 }
