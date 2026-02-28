@@ -49,14 +49,14 @@ static_assert(libs[std::size(libs) - 1] == nullptr, "libs must be nullptr termin
 
 cold woof::Engine::Engine(std::size_t verbose)
 {
-    this->_verbose = verbose; // Init the verbose level
+    this->_verbose.store(verbose); // Init the verbose level
     woof::GraphicFactory factory;
 
     // Try to load the graphic lib and continue will it's failed
     for (std::size_t i = 0; libs[i]; i++) {
         this->_graphic = factory.create(libs[i]);
         if (this->_graphic->isloaded()) {
-            if (this->_verbose >= 1) std::cout << utils::write::strong() << libs[i] << utils::write::reset() << ": dynamic library loaded with success" << std::endl;
+            if (this->_verbose.load() >= 1) std::cout << utils::write::strong() << libs[i] << utils::write::reset() << ": dynamic library loaded with success" << std::endl;
             return;
         }
     }
@@ -67,7 +67,7 @@ cold woof::Engine::Engine(std::size_t verbose)
 
 cold woof::Engine::Engine(std::string graphic_lib, std::size_t verbose)
 {
-    this->_verbose = verbose; // Init the verbose level
+    this->_verbose.store(verbose); // Init the verbose level
     woof::GraphicFactory factory;
     this->_graphic = factory.create(graphic_lib);
 
@@ -75,7 +75,7 @@ cold woof::Engine::Engine(std::string graphic_lib, std::size_t verbose)
     if (!(this->_graphic->isloaded()))
         throw utils::exception::ErrorException(utils::exception::Code::NoLoadedGraphic);
 
-    if (this->_verbose >= 1) std::cout << utils::write::strong() << graphic_lib << utils::write::reset() << ": dynamic library loaded with success" << std::endl;
+    if (this->_verbose.load() >= 1) std::cout << utils::write::strong() << graphic_lib << utils::write::reset() << ": dynamic library loaded with success" << std::endl;
 }
 
 void woof::Engine::link(const std::shared_ptr<woof::IObject>& object)
@@ -100,7 +100,7 @@ void woof::Engine::link(const std::shared_ptr<woof::IObject>& object)
     }
 
     this->_global.push_back(object);
-    if (this->_verbose >= 2) std::cout << utils::write::strong() << object.get() << utils::write::reset() << ": object linked to (" << this << ")" << std::endl;
+    if (this->_verbose.load() >= 2) std::cout << utils::write::strong() << object.get() << utils::write::reset() << ": object linked to (" << utils::write::strong() << this << utils::write::reset() << ")" << std::endl;
 }
 
 void woof::Engine::unlink(const std::shared_ptr<woof::IObject>& object)
@@ -131,5 +131,5 @@ void woof::Engine::unlink(const std::shared_ptr<woof::IObject>& object)
     }
 
     removeObject(this->_global);
-    if (this->_verbose >= 2) std::cout << utils::write::strong() << object.get() << utils::write::reset() << ": object unlinked from (" << this << ")" << std::endl;
+    if (this->_verbose.load() >= 2) std::cout << utils::write::strong() << object.get() << utils::write::reset() << ": object unlinked from (" << utils::write::strong() << this << utils::write::reset() << ")" << std::endl;
 }

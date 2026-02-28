@@ -25,17 +25,27 @@ File Description:
     /* INCLUDE */
 
     /* type */
+    #define _Attribute
+    #include "utils/utils.hpp"      // nodiscard
     #include "graphic/IGraphic.hpp" // woof::IGraphic
     #include "object/IObject.hpp"   // woof::IObject
     #include <cstddef>              // std::size_t
+    #include <chrono>               // std::chrono::milliseconds
+    #include <atomic>               // std::atomic
     #include <memory>               // std::shared_ptr
     #include <vector>               // std::vector
     #include <string>               // std::string
-    #include <atomic>               // std::atomic
+
+    //----------------------------------------------------------------//
+    /* DEFINE */
+
+    #define TARGET_FPS 30
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* TYPDEF */
+
+/* engine status */
 enum Status {
     Running,
     Paused,
@@ -43,13 +53,16 @@ enum Status {
     Stopped,
 };
 
+/* frame duration */
+constexpr auto frame_duration = std::chrono::milliseconds(1000 / TARGET_FPS);
+
 //----------------------------------------------------------------//
 /* CLASS */
 
 class Engine {
     private:
         // ---------- Verbose -------- //
-        std::size_t _verbose = 0;
+        std::atomic<std::size_t> _verbose{0};
         // Each new level take the property of the lower ones (except 0)
         // 0 -> Nothing is displayed
         // 1 -> Only basic loading such as the graphic selected
@@ -76,13 +89,14 @@ class Engine {
         /* in a separated thread */
         void start(); // Start the engine (open the display)
         void pause(std::size_t ms = 0); // Pause the engine with or without a timer before restarting (let the display open)
-        void interrupt(); // Interrupt the engine (close the display)
-        void stop(); // Stop the engine (can't be restarted)
+        void interrupt() noexcept; // Interrupt the engine (close the display)
+        void stop() noexcept; // Stop the engine (can't be restarted)
 
         /* in the same process */
         void tick(); // Simulate one tick
 
         // ------------ Function ---------- //
+        nodiscard bool isRunning() const noexcept {return (this->_status.load() == woof::Status::Running);};
         void setVerbose(std::size_t verbose = 0) {this->_verbose = verbose;};
 
         // ------------ Operator ---------- //
