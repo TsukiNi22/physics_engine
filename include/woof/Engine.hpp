@@ -61,6 +61,7 @@ class Engine {
         std::shared_ptr<woof::IGraphic> _graphic = nullptr;
 
         /* objects */
+        std::vector<std::shared_ptr<woof::IObject>> _global; // Store a copy of all object of any type accepted
         std::vector<std::shared_ptr<woof::IObject>> _actors;
         std::vector<std::shared_ptr<woof::IObject>> _objects;
         std::vector<std::shared_ptr<woof::IObject>> _prop;

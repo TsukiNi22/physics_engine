@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 28/02/2026 by @author Tsukini
 
 File Name:
 ##  @file OpenGLGraphic.cpp
@@ -20,7 +20,7 @@ File Description:
 
 #define _Exception
 #define _Attribute
-#include "utils/Utils.hpp"
+#include "utils/utils.hpp"
 #include "woof/graphic/OpenGLGraphic.hpp"
 #include <iostream>
 #include <dlfcn.h>
