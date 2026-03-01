@@ -29,6 +29,9 @@ add_compile_options(
 # Sources
 # =========================
 set(SRC
+    # Global
+    src/woof/DynamicLibrary.cpp
+
     # Engine
     src/woof/Engine.cpp
     src/woof/engine/run.cpp
@@ -42,11 +45,9 @@ set(SRC
     src/woof/object/ShapeDescriptor.cpp
 
     # Graphic
-    src/woof/graphic/AGraphic.cpp
     src/woof/graphic/SDLGraphic.cpp
 
     # Render
-    src/woof/render/ARender.cpp
     src/woof/render/SDLRender.cpp
     src/woof/render/OpenGLRender.cpp
     src/woof/render/VulkanRender.cpp

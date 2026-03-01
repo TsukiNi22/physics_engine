@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 27/02/2026 by @author Tsukini
+##  @date 01/03/2026 by @author Tsukini
 
 File Name:
 ##  @file IFactory.hpp
@@ -25,8 +25,8 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include <memory>           // std::shared_ptr
-    #include <string>           // std::string
+    #include <memory>   // std::shared_ptr
+    #include <string>   // std::string
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//

@@ -25,7 +25,7 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include "../render/IRender.hpp"  // woof::IRender
+    #include "../render/IRender.hpp"    // woof::IRender
     #include "AFactory.hpp"             // woof::AFactory
 
 namespace woof { // namespace start

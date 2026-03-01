@@ -20,22 +20,28 @@ File Description:
 
 #ifndef IRENDER_H
     #define IRENDER_H
+    
+    //----------------------------------------------------------------//
+    /* INCLUDE */
+
+    /* type */
+    #include "../DynamicLibrary.hpp"    // woof::DynamicLibrary
+    #include <string>                   // std::string
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class IRender {
+class IRender: public woof::DynamicLibrary {
     public:
         // ---------- Pre-Function -------- //
-        virtual bool isloaded() const noexcept = 0;
 
         // ------------ Operator ---------- //
         IRender& operator=(const IRender& object) = delete;
         IRender& operator=(IRender&& object) = delete;
 
         // ---------- Constructor --------- //
-        IRender() = default;
+        IRender(const std::string& lib) noexcept: DynamicLibrary(lib) {};
         IRender(const IRender& object) = delete;
         IRender(IRender&& object) = delete;
 

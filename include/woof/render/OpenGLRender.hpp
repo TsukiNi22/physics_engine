@@ -25,13 +25,14 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include "ARender.hpp" // woof::ARender
+    #include "IRender.hpp"  // woof::IRender
+    #include <string>       // std::string
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class OpenGLRender: public woof::ARender {
+class OpenGLRender: public woof::IRender {
     private:
         /* Nothing */
 
@@ -45,7 +46,7 @@ class OpenGLRender: public woof::ARender {
         OpenGLRender& operator=(OpenGLRender&& object) = delete;
 
         // ---------- Constructor --------- //
-        OpenGLRender() noexcept;
+        OpenGLRender() noexcept: IRender("libGL.so.1") {};
         OpenGLRender(const OpenGLRender& object) = delete;
         OpenGLRender(OpenGLRender&& object) = delete;
 

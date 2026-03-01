@@ -25,13 +25,14 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include "AGraphic.hpp" // woof::AGraphic
+    #include "IGraphic.hpp" // woof::IGraphic
+    #include <string>       // std::string
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class SDLGraphic: public woof::AGraphic {
+class SDLGraphic: public woof::IGraphic {
     private:
         /* Nothing */
 
@@ -45,7 +46,7 @@ class SDLGraphic: public woof::AGraphic {
         SDLGraphic& operator=(SDLGraphic&& object) = delete;
 
         // ---------- Constructor --------- //
-        SDLGraphic() noexcept;
+        SDLGraphic() noexcept: IGraphic("libSDL2.so") {};
         SDLGraphic(const SDLGraphic& object) = delete;
         SDLGraphic(SDLGraphic&& object) = delete;
 

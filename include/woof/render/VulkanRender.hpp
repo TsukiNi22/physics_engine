@@ -25,13 +25,14 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include "ARender.hpp" // woof::ARender
+    #include "IRender.hpp"  // woof::IRender
+    #include <string>       // std::string
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class VulkanRender: public woof::ARender {
+class VulkanRender: public woof::IRender {
     private:
         /* Nothing */
 
@@ -45,7 +46,7 @@ class VulkanRender: public woof::ARender {
         VulkanRender& operator=(VulkanRender&& object) = delete;
 
         // ---------- Constructor --------- //
-        VulkanRender() noexcept;
+        VulkanRender() noexcept: IRender("libvulkan.so.1") {};
         VulkanRender(const VulkanRender& object) = delete;
         VulkanRender(VulkanRender&& object) = delete;
 

@@ -25,13 +25,14 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include "ARender.hpp" // woof::ARender
+    #include "IRender.hpp"  // woof::IRender
+    #include <string>       // std::string
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class SDLRender: public woof::ARender {
+class SDLRender: public woof::IRender {
     private:
         /* Nothing */
 
@@ -45,7 +46,7 @@ class SDLRender: public woof::ARender {
         SDLRender& operator=(SDLRender&& object) = delete;
 
         // ---------- Constructor --------- //
-        SDLRender() noexcept;
+        SDLRender() noexcept: IRender("libSDL2.so") {};
         SDLRender(const SDLRender& object) = delete;
         SDLRender(SDLRender&& object) = delete;
 

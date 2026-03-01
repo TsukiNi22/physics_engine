@@ -20,22 +20,28 @@ File Description:
 
 #ifndef IGRAPHIC_H
     #define IGRAPHIC_H
+    
+    //----------------------------------------------------------------//
+    /* INCLUDE */
+
+    /* type */
+    #include "../DynamicLibrary.hpp"    // woof::DynamicLibrary
+    #include <string>                   // std::string
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class IGraphic {
+class IGraphic: public woof::DynamicLibrary {
     public:
         // ---------- Pre-Function -------- //
-        virtual bool isloaded() const noexcept = 0;
 
         // ------------ Operator ---------- //
         IGraphic& operator=(const IGraphic& object) = delete;
         IGraphic& operator=(IGraphic&& object) = delete;
 
         // ---------- Constructor --------- //
-        IGraphic() = default;
+        IGraphic(const std::string& lib) noexcept: DynamicLibrary(lib) {};
         IGraphic(const IGraphic& object) = delete;
         IGraphic(IGraphic&& object) = delete;
 
