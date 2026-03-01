@@ -55,6 +55,7 @@ enum Code {
     NoLoadedGraphic,
     InvalidObject,
     InvalidAction,
+    FailOpenWindow,
     CODE_SENTINEL // sentinel used for verification
 };
 
@@ -70,6 +71,7 @@ inline constexpr const char *Message[] = {
     /* NoLoadedGraphic */ "Wasn't able to load the graphics library",
     /* InvalidObject */ "Invalid object used",
     /* InvalidAction */ "Can't execute the given action",
+    /* FailOpenWindow */ "Fail during the creation of the window",
 };
 
 // Check at the compile time the correspondece between the message & code

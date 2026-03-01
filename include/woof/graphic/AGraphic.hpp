@@ -11,46 +11,53 @@ Edition:
 ##  @date 01/03/2026 by @author Tsukini
 
 File Name:
-##  @file IGraphic.hpp
+##  @file AGraphic.hpp
 
 File Description:
 ##  You know, I don t think there are good or bad descriptions,
 ##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef IGRAPHIC_H
-    #define IGRAPHIC_H
+#ifndef AGRAPHIC_H
+    #define AGRAPHIC_H
     
     //----------------------------------------------------------------//
     /* INCLUDE */
 
     /* type */
-    #include "../DynamicLibrary.hpp"    // woof::DynamicLibrary
-    #include <cstddef>                  // std::size_t
-    #include <string>                   // std::string
+    #include "IGraphic.hpp" // woof::IGraphic
+    #include <string>       // std::string
+
+    //----------------------------------------------------------------//
+    /* DEFINE */
+
+    /* SDL values (ins't loaded with dlsym) */
+    #define SDL_INIT_VIDEO 0x00000020u
+    #define SDL_WINDOW_SHOWN 0x00000004u
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class IGraphic: public woof::DynamicLibrary {
+class AGraphic: public woof::IGraphic {
+    protected:
+        bool _isopen = false;
+
     public:
         // ---------- Pre-Function -------- //
-        virtual void openWindow(std::size_t width, std::size_t height) = 0;
-        virtual void closeWindow() = 0;
 
         // ------------ Operator ---------- //
-        IGraphic& operator=(const IGraphic& object) = delete;
-        IGraphic& operator=(IGraphic&& object) = delete;
+        AGraphic& operator=(const AGraphic& object) = delete;
+        AGraphic& operator=(AGraphic&& object) = delete;
 
         // ---------- Constructor --------- //
-        IGraphic(const std::string& lib) noexcept: DynamicLibrary(lib) {};
-        IGraphic(const IGraphic& object) = delete;
-        IGraphic(IGraphic&& object) = delete;
+        AGraphic(const std::string& lib) noexcept: IGraphic(lib) {};
+        AGraphic(const AGraphic& object) = delete;
+        AGraphic(AGraphic&& object) = delete;
 
         // ----------- Destructor --------- //
-        virtual ~IGraphic() = default;
+        ~AGraphic() = default;
 };
 
 } // namespace end
-#endif /* IGRAPHIC_H */
+#endif /* AGRAPHIC_H */

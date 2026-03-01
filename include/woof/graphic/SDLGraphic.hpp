@@ -25,19 +25,33 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include "IGraphic.hpp" // woof::IGraphic
+    #include "AGraphic.hpp" // woof::AGraphic
+    #include <cstddef>      // std::size_t
     #include <string>       // std::string
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
 
-class SDLGraphic: public woof::IGraphic {
+class SDLGraphic: public woof::AGraphic {
     private:
-        /* Nothing */
+        /* SDL values */
+        struct SDL_Window;
+        struct SDL_Renderer;
+        SDL_Window*   _window   = nullptr;
+        SDL_Renderer* _renderer = nullptr;
+
+        /* SDL function pointers */
+        int  (*_SDL_Init)(unsigned int) = nullptr;
+        void (*_SDL_Quit)(void) = nullptr;
+        SDL_Window* (*_SDL_CreateWindow)(const char*, int, int, int, int, unsigned int) = nullptr;
+        void (*_SDL_DestroyWindow)(SDL_Window*) = nullptr;
+        const char* (*_SDL_GetError)(void) = nullptr;
 
     public:
         // ---------- Pre-Function -------- //
+        void openWindow(std::size_t width = 800, std::size_t height = 600) final;
+        void closeWindow() final;
 
         // ------------ Function ---------- //
 
@@ -46,12 +60,12 @@ class SDLGraphic: public woof::IGraphic {
         SDLGraphic& operator=(SDLGraphic&& object) = delete;
 
         // ---------- Constructor --------- //
-        SDLGraphic() noexcept: IGraphic("libSDL2.so") {};
+        SDLGraphic();
         SDLGraphic(const SDLGraphic& object) = delete;
         SDLGraphic(SDLGraphic&& object) = delete;
 
         // ----------- Destructor --------- //
-        ~SDLGraphic() = default;
+        ~SDLGraphic();
 };
 
 } // namespace end
