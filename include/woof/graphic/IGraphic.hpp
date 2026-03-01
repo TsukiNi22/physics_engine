@@ -36,8 +36,9 @@ namespace woof { // namespace start
 class IGraphic: public woof::DynamicLibrary {
     public:
         // ---------- Pre-Function -------- //
-        virtual void openWindow(std::size_t width, std::size_t height) = 0;
+        virtual void openWindow(std::size_t width = 0, std::size_t height = 0) = 0;
         virtual void closeWindow() = 0;
+        virtual bool isOpen() const noexcept = 0;
 
         // ------------ Operator ---------- //
         IGraphic& operator=(const IGraphic& object) = delete;

@@ -28,13 +28,6 @@ File Description:
     #include "IGraphic.hpp" // woof::IGraphic
     #include <string>       // std::string
 
-    //----------------------------------------------------------------//
-    /* DEFINE */
-
-    /* SDL values (ins't loaded with dlsym) */
-    #define SDL_INIT_VIDEO 0x00000020u
-    #define SDL_WINDOW_SHOWN 0x00000004u
-
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */
@@ -45,6 +38,9 @@ class AGraphic: public woof::IGraphic {
 
     public:
         // ---------- Pre-Function -------- //
+
+        // ------------ Function ---------- //
+        bool isOpen() const noexcept final {return this->_isopen;};
 
         // ------------ Operator ---------- //
         AGraphic& operator=(const AGraphic& object) = delete;

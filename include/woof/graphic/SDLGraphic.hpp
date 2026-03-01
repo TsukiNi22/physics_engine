@@ -29,6 +29,13 @@ File Description:
     #include <cstddef>      // std::size_t
     #include <string>       // std::string
 
+    //----------------------------------------------------------------//
+    /* DEFINE */
+
+    /* SDL values (ins't loaded with dlsym) */
+    #define SDL_INIT_VIDEO 0x00000020u
+    #define SDL_WINDOW_SHOWN 0x00000004u
+
 namespace woof { // namespace start
 //----------------------------------------------------------------//
 /* CLASS */

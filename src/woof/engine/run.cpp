@@ -40,6 +40,12 @@ void woof::Engine::start()
     this->_status.store(woof::Status::Running);
     if (this->_verbose.load() >= 2) std::cout << "engine: " << utils::write::strong() << "Running" << utils::write::reset() << std::endl;
 
+    // Open the window
+    if (!(this->_graphic->isOpen())) {
+        if (this->_verbose.load() >= 4) std::cout << "window: " << utils::write::strong() << "Opening" << utils::write::reset() << std::endl;
+        this->_graphic->openWindow();
+    }
+
     // Launch the engine loop
     std::thread([this]() {
         // Init
@@ -111,6 +117,12 @@ void woof::Engine::interrupt() noexcept
     // Update the status
     this->_status.store(woof::Status::Interrupted);
     if (this->_verbose.load() >= 2) std::cout << "engine: " << utils::write::strong() << "Interrupted" << utils::write::reset() << std::endl;
+
+    // Close the window
+    if (this->_graphic->isOpen()) {
+        if (this->_verbose.load() >= 4) std::cout << "window: " << utils::write::strong() << "Closing" << utils::write::reset() << std::endl;
+        this->_graphic->closeWindow();
+    }
 }
 
 void woof::Engine::stop() noexcept
@@ -122,6 +134,12 @@ void woof::Engine::stop() noexcept
     // Update the status
     this->_status.store(woof::Status::Stopped);
     if (this->_verbose.load() >= 2) std::cout << "engine: " << utils::write::strong() << "Stopped" << utils::write::reset() << std::endl;
+
+    // Close the window
+    if (this->_graphic->isOpen()) {
+        if (this->_verbose.load() >= 4) std::cout << "window: " << utils::write::strong() << "Closing" << utils::write::reset() << std::endl;
+        this->_graphic->closeWindow();
+    }
 }
 
 hot void woof::Engine::tick()
