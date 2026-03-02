@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 02/03/2026 by @author Tsukini
 
 File Name:
 ##  @file DynamicLibrary.hpp
@@ -24,7 +24,6 @@ File Description:
 #include "woof/DynamicLibrary.hpp"
 #include <iostream>
 #include <string>
-#include <dlfcn.h>
 
 cold woof::DynamicLibrary::DynamicLibrary(const std::string& lib) noexcept
 {

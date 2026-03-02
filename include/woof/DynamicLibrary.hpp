@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 02/03/2026 by @author Tsukini
 
 File Name:
 ##  @file DynamicLibrary.hpp
@@ -25,9 +25,11 @@ File Description:
     /* INCLUDE */
 
     /* type */
+    #define _Exception
     #define _Attribute
-    #include "utils/utils.hpp"  // nodiscard
+    #include "utils/utils.hpp"  // utils::exception::CustomException, utils::exception::Type, utils::exception::Code, cold, nodiscard
     #include <string>           // std::string
+    #include <dlfcn.h>          // dlsym, dlerror
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
@@ -37,9 +39,19 @@ class DynamicLibrary {
     protected:
         void* _lib = nullptr;
 
+        // ------------ Function ---------- //
+        template<typename T>
+        static cold T loadFunction(void* lib, const char* name)
+        {
+            T func = reinterpret_cast<T>(dlsym(lib, name));
+            if (!func)
+                throw utils::exception::CustomException(utils::exception::Type::Error, utils::exception::Code::Dlsym, dlerror());
+            return func;
+        }
+
     public:
         // ------------ Function ---------- //
-        bool isloaded() const noexcept {return this->_lib;};
+        nodiscard bool isloaded() const noexcept {return this->_lib;};
 
         // ------------ Operator ---------- //
         DynamicLibrary& operator=(const DynamicLibrary& object) = delete;
