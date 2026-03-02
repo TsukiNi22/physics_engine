@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 02/03/2026 by @author Tsukini
 
 File Name:
 ##  @file SDLGraphic.cpp
@@ -23,6 +23,7 @@ File Description:
 #include "utils/utils.hpp"
 #include "woof/graphic/SDLGraphic.hpp"
 #include <cstddef>
+#include <string>
 #include <dlfcn.h>
 
 cold woof::SDLGraphic::SDLGraphic()
@@ -33,19 +34,15 @@ cold woof::SDLGraphic::SDLGraphic()
         return;
 
     // Load function pointers
-    if (!(this->_SDL_Init = reinterpret_cast<int(*)(unsigned int)>(dlsym(this->_lib, "SDL_Init"))))
-        throw utils::exception::CustomException(utils::exception::Type::Error, utils::exception::Code::Dlsym, dlerror());
-    if (!(this->_SDL_Quit = reinterpret_cast<void(*)()>(dlsym(this->_lib, "SDL_Quit"))))
-        throw utils::exception::CustomException(utils::exception::Type::Error, utils::exception::Code::Dlsym, dlerror());
-    if (!(this->_SDL_CreateWindow = reinterpret_cast<SDL_Window*(*)(const char*, int, int, int, int, unsigned int)>(dlsym(this->_lib, "SDL_CreateWindow"))))
-        throw utils::exception::CustomException(utils::exception::Type::Error, utils::exception::Code::Dlsym, dlerror());
-    if (!(this->_SDL_DestroyWindow = reinterpret_cast<void(*)(SDL_Window*)>(dlsym(this->_lib, "SDL_DestroyWindow"))))
-        throw utils::exception::CustomException(utils::exception::Type::Error, utils::exception::Code::Dlsym, dlerror());
-    if (!(this->_SDL_GetError = reinterpret_cast<const char* (*)()>(dlsym(this->_lib, "SDL_GetError"))))
-        throw utils::exception::CustomException(utils::exception::Type::Error, utils::exception::Code::Dlsym, dlerror());
+    this->_SDL_Init = this->loadFunction<int(*)(unsigned int)>(this->_lib, "SDL_Init");
+    this->_SDL_Quit = this->loadFunction<void(*)()>(this->_lib, "SDL_Quit");
+    this->_SDL_CreateWindow = this->loadFunction<SDL_Window*(*)(const char*, int, int, int, int, unsigned int)>(this->_lib, "SDL_CreateWindow");
+    this->_SDL_DestroyWindow = this->loadFunction<void(*)(SDL_Window*)>(this->_lib, "SDL_DestroyWindow");
+    this->_SDL_GetError = this->loadFunction<const char* (*)()>(this->_lib, "SDL_GetError");
+    this->_SDL_GL_SwapWindow = this->loadFunction<void (*)(void*)>(this->_lib, "SDL_GL_SwapWindow");
 }
 
-cold void woof::SDLGraphic::openWindow(std::size_t width, std::size_t height)
+cold void woof::SDLGraphic::openWindow(std::string renderLib, std::size_t width, std::size_t height)
 {
     // Check if the library was loaded & not already open
     if (!this->isloaded())
@@ -54,8 +51,14 @@ cold void woof::SDLGraphic::openWindow(std::size_t width, std::size_t height)
         throw utils::exception::CustomException(utils::exception::Type::Error, utils::exception::Code::InvalidAction, "Can't reopen a window on the same class");
 
     // Check the used pointers
-    if (!(this->_SDL_Init) || !(this->_SDL_CreateWindow) || !(this->_SDL_GetError))
+    if (!(this->_SDL_Init) || !(this->_SDL_CreateWindow) || !(this->_SDL_GetError)) unlikely {
         throw utils::exception::ErrorException(utils::exception::Code::InvalidPtr);
+    }
+
+    // Flag selection
+    std::size_t flag = 0;
+    if (renderLib == "opengl") flag |= SDL_WINDOW_OPENGL;
+    else if (renderLib == "vulkan") flag |= SDL_WINDOW_VULKAN;
 
     // Create the window
     if (this->_SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -64,7 +67,7 @@ cold void woof::SDLGraphic::openWindow(std::size_t width, std::size_t height)
         "Woof Engine",
         100, 100,
         width, height,
-        SDL_WINDOW_SHOWN
+        SDL_WINDOW_SHOWN | flag
     );
 
     // Check the window status
@@ -82,14 +85,32 @@ cold void woof::SDLGraphic::closeWindow()
         throw utils::exception::CustomException(utils::exception::Type::Error, utils::exception::Code::InvalidAction, "Can't close a window that dosen't exist");
 
     // Check the used pointers
-    if (!(this->_window) || !(this->_SDL_DestroyWindow) || !(this->_SDL_Quit))
+    if (!(this->_window) || !(this->_SDL_DestroyWindow) || !(this->_SDL_Quit)) unlikely {
         throw utils::exception::ErrorException(utils::exception::Code::InvalidPtr);
+    }
 
     // Close the window
     this->_SDL_DestroyWindow(_window);
     this->_SDL_Quit();
     this->_window = nullptr;
     this->_isopen = false;
+}
+
+hot void woof::SDLGraphic::update() const
+{
+    // Check if the library was loaded & open
+    if (!this->isloaded())
+        throw utils::exception::CustomException(utils::exception::Type::Error, utils::exception::Code::InvalidAction, "Can't update a window without the dynamic library loaded");
+    else if (!(this->_isopen))
+        throw utils::exception::CustomException(utils::exception::Type::Error, utils::exception::Code::InvalidAction, "Can't update a window that dosen't exist");
+
+    // Check the used pointers
+    if (!(this->_window) || !(this->_SDL_GL_SwapWindow)) unlikely {
+        throw utils::exception::ErrorException(utils::exception::Code::InvalidPtr);
+    }
+
+    // Invert the draw&display buffer
+    this->_SDL_GL_SwapWindow(this->_window);
 }
 
 woof::SDLGraphic::~SDLGraphic()

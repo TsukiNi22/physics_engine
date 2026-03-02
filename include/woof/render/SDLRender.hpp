@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 02/03/2026 by @author Tsukini
 
 File Name:
 ##  @file SDLRender.hpp
@@ -25,8 +25,10 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include "IRender.hpp"  // woof::IRender
-    #include <string>       // std::string
+    #include "IRender.hpp"              // woof::IRender
+    #include "../object/IObject.hpp"    // woof::IObject
+    #include <memory>                   // std::shared_ptr
+    #include <string>                   // std::string
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
@@ -34,19 +36,18 @@ namespace woof { // namespace start
 
 class SDLRender: public woof::IRender {
     private:
-        /* Nothing */
+        /* SDL function pointers */
 
     public:
         // ---------- Pre-Function -------- //
-
-        // ------------ Function ---------- //
+        void draw(const std::shared_ptr<woof::IObject>& object) final;
 
         // ------------ Operator ---------- //
         SDLRender& operator=(const SDLRender& object) = delete;
         SDLRender& operator=(SDLRender&& object) = delete;
 
         // ---------- Constructor --------- //
-        SDLRender() noexcept: IRender("libSDL2.so") {};
+        SDLRender();
         SDLRender(const SDLRender& object) = delete;
         SDLRender(SDLRender&& object) = delete;
 

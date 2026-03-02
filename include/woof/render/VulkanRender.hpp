@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 02/03/2026 by @author Tsukini
 
 File Name:
 ##  @file VulkanRender.hpp
@@ -25,8 +25,10 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include "IRender.hpp"  // woof::IRender
-    #include <string>       // std::string
+    #include "IRender.hpp"              // woof::IRender
+    #include "../object/IObject.hpp"    // woof::IObject
+    #include <memory>                   // std::shared_ptr
+    #include <string>                   // std::string
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
@@ -34,19 +36,18 @@ namespace woof { // namespace start
 
 class VulkanRender: public woof::IRender {
     private:
-        /* Nothing */
+        /* Vulkan function pointers */
 
     public:
         // ---------- Pre-Function -------- //
-
-        // ------------ Function ---------- //
+        void draw(const std::shared_ptr<woof::IObject>& object) final;
 
         // ------------ Operator ---------- //
         VulkanRender& operator=(const VulkanRender& object) = delete;
         VulkanRender& operator=(VulkanRender&& object) = delete;
 
         // ---------- Constructor --------- //
-        VulkanRender() noexcept: IRender("libvulkan.so.1") {};
+        VulkanRender();
         VulkanRender(const VulkanRender& object) = delete;
         VulkanRender(VulkanRender&& object) = delete;
 

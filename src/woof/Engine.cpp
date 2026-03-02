@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 02/03/2026 by @author Tsukini
 
 File Name:
 ##  @file Engine.cpp
@@ -64,6 +64,7 @@ cold woof::Engine::Engine(std::size_t verbose)
     for (std::size_t i = 0; graphic_libs[i]; i++) {
         this->_graphic = graphicFactory.create(graphic_libs[i]);
         if (this->_graphic->isloaded()) {
+            this->_graphicLib = graphic_libs[i];
             if (this->_verbose.load() >= 1) std::cout << utils::write::strong() << graphic_libs[i] << utils::write::reset() << ": graphic dynamic library loaded with success" << std::endl;
             break;
         }
@@ -76,6 +77,7 @@ cold woof::Engine::Engine(std::size_t verbose)
     for (std::size_t i = 0; render_libs[i]; i++) {
         this->_render = renderFactory.create(render_libs[i]);
         if (this->_render->isloaded()) {
+            this->_renderLib = render_libs[i];
             if (this->_verbose.load() >= 1) std::cout << utils::write::strong() << render_libs[i] << utils::write::reset() << ": render dynamic library loaded with success" << std::endl;
             break;
         }
@@ -96,6 +98,7 @@ cold woof::Engine::Engine(std::string render_lib, std::size_t verbose)
     for (std::size_t i = 0; graphic_libs[i]; i++) {
         this->_graphic = graphicFactory.create(graphic_libs[i]);
         if (this->_graphic->isloaded()) {
+            this->_graphicLib = graphic_libs[i];
             if (this->_verbose.load() >= 1) std::cout << utils::write::strong() << graphic_libs[i] << utils::write::reset() << ": graphic dynamic library loaded with success" << std::endl;
             break;
         }
@@ -109,6 +112,7 @@ cold woof::Engine::Engine(std::string render_lib, std::size_t verbose)
     // Check if the render was loaded
     if (!(this->_render) || this->_render->isloaded())
         throw utils::exception::ErrorException(utils::exception::Code::NoLoadedRender);
+    this->_renderLib = render_lib;
 
     if (this->_verbose.load() >= 1) std::cout << utils::write::strong() << render_lib << utils::write::reset() << ": dynamic library loaded with success" << std::endl;
 }

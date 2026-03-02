@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 02/03/2026 by @author Tsukini
 
 File Name:
 ##  @file Engine.hpp
@@ -76,6 +76,8 @@ class Engine {
         std::atomic<woof::Status> _status{woof::Status::Paused};
         std::shared_ptr<woof::IGraphic> _graphic = nullptr;
         std::shared_ptr<woof::IRender> _render = nullptr;
+        std::string _graphicLib = "[none]"; // name of the selected one
+        std::string _renderLib = "[none]"; // name of the selected one
 
         /* objects */
         std::vector<std::shared_ptr<woof::IObject>> _global; // Store a copy of all object of any type accepted

@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 02/03/2026 by @author Tsukini
 
 File Name:
 ##  @file AGraphic.hpp
@@ -25,8 +25,10 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include "IGraphic.hpp" // woof::IGraphic
-    #include <string>       // std::string
+    #define _Attribute
+    #include "utils/utils.hpp"  // nodiscard
+    #include "IGraphic.hpp"     // woof::IGraphic
+    #include <string>           // std::string
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
@@ -40,7 +42,7 @@ class AGraphic: public woof::IGraphic {
         // ---------- Pre-Function -------- //
 
         // ------------ Function ---------- //
-        bool isOpen() const noexcept final {return this->_isopen;};
+        nodiscard bool isOpen() const noexcept final {return this->_isopen;};
 
         // ------------ Operator ---------- //
         AGraphic& operator=(const AGraphic& object) = delete;

@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 02/03/2026 by @author Tsukini
 
 File Name:
 ##  @file IRender.hpp
@@ -26,6 +26,8 @@ File Description:
 
     /* type */
     #include "../DynamicLibrary.hpp"    // woof::DynamicLibrary
+    #include "../object/IObject.hpp"    // woof::IObject
+    #include <memory>                   // std::shared_ptr
     #include <string>                   // std::string
 
 namespace woof { // namespace start
@@ -35,6 +37,7 @@ namespace woof { // namespace start
 class IRender: public woof::DynamicLibrary {
     public:
         // ---------- Pre-Function -------- //
+        virtual void draw(const std::shared_ptr<woof::IObject>& object) = 0;
 
         // ------------ Operator ---------- //
         IRender& operator=(const IRender& object) = delete;

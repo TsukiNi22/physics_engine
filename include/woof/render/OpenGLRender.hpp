@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 02/03/2026 by @author Tsukini
 
 File Name:
 ##  @file OpenGLRender.hpp
@@ -25,8 +25,16 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include "IRender.hpp"  // woof::IRender
-    #include <string>       // std::string
+    #include "IRender.hpp"              // woof::IRender
+    #include "../object/IObject.hpp"    // woof::IObject
+    #include <memory>                   // std::shared_ptr
+    #include <string>                   // std::string
+
+    //----------------------------------------------------------------//
+    /* DEFINE */
+
+    /* OpenGL values (ins't loaded with dlsym) */
+    #define GL_COLOR_BUFFER_BIT 0x00004000u
 
 namespace woof { // namespace start
 //----------------------------------------------------------------//
@@ -34,19 +42,20 @@ namespace woof { // namespace start
 
 class OpenGLRender: public woof::IRender {
     private:
-        /* Nothing */
+        /* OpenGL function pointers */
+        void (*_glClearColor)(float, float, float, float) = nullptr;
+        void (*_glClear)(unsigned int) = nullptr;
 
     public:
         // ---------- Pre-Function -------- //
-
-        // ------------ Function ---------- //
+        void draw(const std::shared_ptr<woof::IObject>& object) final;
 
         // ------------ Operator ---------- //
         OpenGLRender& operator=(const OpenGLRender& object) = delete;
         OpenGLRender& operator=(OpenGLRender&& object) = delete;
 
         // ---------- Constructor --------- //
-        OpenGLRender() noexcept: IRender("libGL.so.1") {};
+        OpenGLRender();
         OpenGLRender(const OpenGLRender& object) = delete;
         OpenGLRender(OpenGLRender&& object) = delete;
 

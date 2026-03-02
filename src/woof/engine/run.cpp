@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 02/03/2026 by @author Tsukini
 
 File Name:
 ##  @file run.cpp
@@ -23,8 +23,10 @@ File Description:
 #define _Attribute
 #include "utils/utils.hpp"
 #include "woof/Engine.hpp"
+#include "woof/object/IObject.hpp"
 #include <iostream>
 #include <cstddef>
+#include <memory>
 #include <thread>
 #include <chrono>
 
@@ -43,7 +45,7 @@ void woof::Engine::start()
     // Open the window
     if (!(this->_graphic->isOpen())) {
         if (this->_verbose.load() >= 4) std::cout << "window: " << utils::write::strong() << "Opening" << utils::write::reset() << std::endl;
-        this->_graphic->openWindow();
+        this->_graphic->openWindow(this->_renderLib);
     }
 
     // Launch the engine loop
@@ -148,4 +150,9 @@ hot void woof::Engine::tick()
     // 2 - handling input from actor
     // 3 - updating object
     // 4 - rendering object
+
+    // Update the rendering
+    for (const std::shared_ptr<woof::IObject>& object: this->_global)
+        this->_render->draw(object);
+    this->_graphic->update();
 }

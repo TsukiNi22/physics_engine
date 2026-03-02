@@ -8,7 +8,7 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 02/03/2026 by @author Tsukini
 
 File Name:
 ##  @file IGraphic.hpp
@@ -36,9 +36,11 @@ namespace woof { // namespace start
 class IGraphic: public woof::DynamicLibrary {
     public:
         // ---------- Pre-Function -------- //
-        virtual void openWindow(std::size_t width = 0, std::size_t height = 0) = 0;
+        virtual void openWindow(std::string renderLib, std::size_t width = 800, std::size_t height = 600) = 0;
         virtual void closeWindow() = 0;
+        virtual void update() const = 0;
         virtual bool isOpen() const noexcept = 0;
+        virtual void *getWindow() const noexcept = 0;
 
         // ------------ Operator ---------- //
         IGraphic& operator=(const IGraphic& object) = delete;
