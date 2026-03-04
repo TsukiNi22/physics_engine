@@ -1,13 +1,12 @@
 /**************************************************************\
 Edition:
-##  @date 01/03/2026 by @author Tsukini
+##  @date 04/03/2026 by @author Tsukini
 
 File Name:
 ##  @file ExceptionDefine.hpp
 
 File Description:
-##  You know, I don t think there are good or bad descriptions,
-##  for me, life is all about functions...
+##  Definition of the error code&message
 \**************************************************************/
 
 #ifndef EXCEPTIONDEFINE_H
@@ -17,8 +16,7 @@ File Description:
     /* INCLUDE */
 
     /* type */
-    #include <iterator> // std::size
-    #include <cstddef>  // std::size_t
+    #include "generated_exception_header.hpp"
 
     //----------------------------------------------------------------//
     /* DEFINE */
@@ -42,40 +40,6 @@ enum Type {
     Error   = 0b100,
     Warning = 0b1000,
 };
-
-/* Definition of the different exception code */
-enum Code {
-    Undefined = 0,
-    InvalidPtr,
-    Dlopen,
-    Dlsym,
-    Dlclose,
-    UnknowClassFactory,
-    NoLoadedRender,
-    NoLoadedGraphic,
-    InvalidObject,
-    InvalidAction,
-    FailOpenWindow,
-    CODE_SENTINEL // sentinel used for verification
-};
-
-/* Corresponding exception message for each code */
-inline constexpr const char *Message[] = {
-    /* Undefined */ "An undefined error has occured",
-    /* InvalidPtr */ "Invalid pointer used (null)",
-    /* Dlopen */ "Failed to load a dynamic library",
-    /* Dlsym */ "Failed to load a function from a dynamic library",
-    /* Dlclose */ "Failed to release a loaded dynamic library",
-    /* UnknowClassFactory */ "An unknow class name was given to the factory",
-    /* NoLoadedRender */ "Wasn't able to load the render library",
-    /* NoLoadedGraphic */ "Wasn't able to load the graphics library",
-    /* InvalidObject */ "Invalid object used",
-    /* InvalidAction */ "Can't execute the given action",
-    /* FailOpenWindow */ "Fail during the creation of the window",
-};
-
-// Check at the compile time the correspondece between the message & code
-static_assert(std::size(Message) == static_cast<std::size_t>(utils::exception::Code::CODE_SENTINEL), "The message array doesn't correspond to the available exception codes");
 
 } // namespace end
 #endif /* EXCEPTIONDEFINE_H */

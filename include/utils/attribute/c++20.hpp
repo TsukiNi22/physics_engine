@@ -1,13 +1,13 @@
 /**************************************************************\
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 04/03/2026 by @author Tsukini
 
 File Name:
 ##  @file Attribute-c++20.hpp
 
 File Description:
-##  You know, I don t think there are good or bad descriptions,
-##  for me, life is all about functions...
+##  Different attribute used for optimisation & other thing
+##  Version for c++20 and above
 \**************************************************************/
 
 #ifndef ATTRIBUTE_CPP20_H
@@ -22,20 +22,25 @@ File Description:
     #define hidden          [[gnu::visibility("hidden")]]   // Change the visibility on a shared lib
     #define ctor            [[gnu::constructor]]            // Execute before the main
     #define dtor            [[gnu::destructor]]             // Execute after the main
+    #define outdated(info)  [[deprecated(info)]]            // Signal a deprecated function
+    #define fallthrough     [[fallthrough]]                 // Ingore warn for no break in switch
 
     /* branch prediction */
     #define likely          [[likely]]                  // Signal a condition that has a bigger probability of appening
     #define unlikely        [[unlikely]]                // Signal a condition that has a smallest probability of appening
     #define likely_c(c)     __builtin_expect(!!(c), 1)  // Signal a condition that has a bigger probability of appening
     #define unlikely_c(c)   __builtin_expect(!!(c), 0)  // Signal a condition that has a smallest probability of appening
-    
+    #define expect(c, v)    __builtin_expect(c, v)      // Signal a condition that has a high probability of having the given value
+
     /* optimisation */
-    #define cold    [[gnu::cold]]   // Signal a function that has a small number of use
-    #define hot     [[gnu::hot]]    // Signal a function that has a huge number of use
+    #define assume(expr)    [[assume(expr)]]    // Assume a given expr as true
+    #define cold            [[gnu::cold]]       // Signal a function that has a small number of use
+    #define hot             [[gnu::hot]]        // Signal a function that has a huge number of use
 
     /* binary layout */
-    #define remove_padding  [[gnu::packed]] // Remove the memory padding in a struct
-    #define set_padding(n)  alignas(n)      // Set the memory padding in a struct
+    #define remove_address  [[no_unique_address]]   // Remove unique address for elements
+    #define remove_padding  [[gnu::packed]]         // Remove the memory padding in a struct
+    #define set_padding(n)  alignas(n)              // Set the memory padding
 
     /* allocation hints */
     #define alloc_size(i_size)              [[gnu::alloc_size(i_size)]]                 // Signal a malloc of the given size in the argument

@@ -1,13 +1,13 @@
 /**************************************************************\
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 04/03/2026 by @author Tsukini
 
 File Name:
 ##  @file Attribute-fallback.hpp
 
 File Description:
-##  You know, I don t think there are good or bad descriptions,
-##  for me, life is all about functions...
+##  Different attribute used for optimisation & other thing
+##  Fallback if the version used is inferior to c++14
 \**************************************************************/
 
 #ifndef ATTRIBUTE_FALLBACK_H
@@ -22,18 +22,23 @@ File Description:
     #define hidden
     #define ctor
     #define dtor
+    #define outdated(info)
+    #define fallthrough
 
     /* branch prediction */
     #define likely
     #define unlikely
     #define likely_c(c)     (c)
     #define unlikely_c(c)   (c)
+    #define expect(c, v)    (c)
 
     /* optimisation */
+    #define assume(expr)
     #define cold
     #define hot
 
     /* binary layout */
+    #define remove_address
     #define remove_padding
     #define set_padding(n)
 

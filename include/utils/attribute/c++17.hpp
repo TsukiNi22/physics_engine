@@ -1,13 +1,13 @@
 /**************************************************************\
 Edition:
-##  @date 26/02/2026 by @author Tsukini
+##  @date 04/03/2026 by @author Tsukini
 
 File Name:
 ##  @file Attribute-c++17.hpp
 
 File Description:
-##  You know, I don t think there are good or bad descriptions,
-##  for me, life is all about functions...
+##  Different attribute used for optimisation & other thing
+##  Version for c++17 and above
 \**************************************************************/
 
 #ifndef ATTRIBUTE_CPP17_H
@@ -22,18 +22,23 @@ File Description:
     #define hidden          [[gnu::visibility("hidden")]]   // Change the visibility on a shared lib
     #define ctor            [[gnu::constructor]]            // Execute before the main
     #define dtor            [[gnu::destructor]]             // Execute after the main
+    #define outdated(info)  [[deprecated(info)]]            // Signal a deprecated function
+    #define fallthrough     [[fallthrough]]                 // Ingore warn for no break in switch
 
     /* branch prediction */
     #define likely          // Not defined in this version
     #define unlikely        // Not defined in this version
     #define likely_c(c)     __builtin_expect(!!(c), 1)  // Signal a condition that has a bigger probability of appening
     #define unlikely_c(c)   __builtin_expect(!!(c), 0)  // Signal a condition that has a smallest probability of appening
+    #define expect(c, v)    __builtin_expect(c, v)      // Signal a condition that has a high probability of having the given value
     
     /* optimisation */
-    #define cold    [[gnu::cold]]   // Signal a function that has a small number of use
-    #define hot     [[gnu::hot]]    // Signal a function that has a huge number of use
+    #define assume(expr)    __builtin_assume(expr)  // Assume a given expr as true
+    #define cold            [[gnu::cold]]           // Signal a function that has a small number of use
+    #define hot             [[gnu::hot]]            // Signal a function that has a huge number of use
 
     /* binary layout */
+    #define remove_address  // Not defined in this version
     #define remove_padding  [[gnu::packed]] // Remove the memory padding in a struct
     #define set_padding(n)  alignas(n)      // Set the memory padding in a struct
 

@@ -8,51 +8,65 @@
  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
 Edition:
-##  @date 02/03/2026 by @author Tsukini
+##  @date 03/03/2026 by @author Tsukini
 
 File Name:
-##  @file Attribute.hpp
+##  @file Style.hpp
 
 File Description:
-##  Include the right file from the c++ version used or selected
+##  You know, I don t think there are good or bad descriptions,
+##  for me, life is all about functions...
 \**************************************************************/
 
-#ifndef ATTRIBUTE_H
-    #define ATTRIBUTE_H
+#ifndef STYLE_H
+    #define STYLE_H
 
     //----------------------------------------------------------------//
     /* INCLUDE */
 
-    #if !defined(__cplusplus)
-        #error "C++ compiler required"
-    #elif !defined(__GNUC__)
-        #include "fallback.hpp"
- 
-    #elif defined(FORCED_CXX_STANDARD) // Fored version
+    /* type */
+    #include <iostream>
 
-        #if FORCED_CXX_STANDARD >= 20
-            #include "c++20.hpp"
-        #elif FORCED_CXX_STANDARD >= 17
-            #include "c++17.hpp"
-        #elif FORCED_CXX_STANDARD >= 14
-            #include "c++14.hpp"
-        #else
-            #include "fallback.hpp"
-        #endif
+namespace utils::write { // namespace start
+//----------------------------------------------------------------//
+/* TYPDEF */
 
-    #else // No forced version 
+/* style */
+enum class Style: std::uint8_t {
+    Strong = 1,
+    Dark,
+    Italic,
+    Underlined,
+    FlashingFast,
+    FlashingSlow,
+    Reversed,
+    Hide,
+    Bar,
+    Monospace = 50,
+    Framed,         // Rarely supported
+    Encircled,      // Rarely supported
+    Overlined,
+    Exposant = 73,  // Rarely supported
+    Indice,         // Rarely supported
+};
 
-        #if __cplusplus >= 202002L
-            #include "c++20.hpp"
-        #elif __cplusplus >= 201703L
-            #include "c++17.hpp"
-        #elif __cplusplus >= 201402L
-            #include "c++14.hpp"
-        #else
-            #include "fallback.hpp"
-        #endif
-    
-    #endif
+/* reset style */
+enum class ResetStyle: std::uint8_t {
+    All = 0,
+    Strong = 21,
+    Dark,
+    Italic,
+    Underlined,
+    FlashingFast,
+    FlashingSlow,
+    Reversed,
+    Hide,
+    Bar,
+    FramedEncircled = 54,
+    Overlined,
+    UnderlineColor = 59,
+    ExposantIndice = 75,
+};
 
-
-#endif /* ATTRIBUTE_H */
+} // namespace end
+#endif /* STYLE_H */

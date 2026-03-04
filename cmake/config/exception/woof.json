@@ -1,0 +1,44 @@
+{
+    "errors": [
+        {
+            "code": "InvalidPtr",
+            "message": "Invalid pointer used (null)"
+        },
+        {
+            "code": "Dlopen",
+            "message": "Failed to load a dynamic library"
+        },
+        {
+            "code": "Dlsym",
+            "message": "Failed to load a function from a dynamic library"
+        },
+        {
+            "code": "Dlclose",
+            "message": "Failed to release a loaded dynamic library"
+        },
+        {
+            "code": "UnknowClassFactory",
+            "message": "An unknow class name was given to the factory"
+        },
+        {
+            "code": "NoLoadedRender",
+            "message": "Wasn't able to load the render library"
+        },
+        {
+            "code": "NoLoadedGraphic",
+            "message": "Wasn't able to load the graphics library"
+        },
+        {
+            "code": "InvalidObject",
+            "message": "Invalid object used"
+        },
+        {
+            "code": "InvalidAction",
+            "message": "Can't execute the given action"
+        },
+        {
+            "code": "FailOpenWindow",
+            "message": "Fail during the creation of the window"
+        }
+    ]
+}
