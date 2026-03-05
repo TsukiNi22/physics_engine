@@ -2,43 +2,53 @@
     "errors": [
         {
             "code": "InvalidPtr",
-            "message": "Invalid pointer used (null)"
+            "message": "Invalid pointer used (null)",
+            "restrictions": ["Fatal", "Error"]
         },
         {
             "code": "Dlopen",
-            "message": "Failed to load a dynamic library"
+            "message": "Failed to load a dynamic library",
+            "restrictions": ["Fatal", "Error"]
         },
         {
             "code": "Dlsym",
-            "message": "Failed to load a function from a dynamic library"
+            "message": "Failed to load a function from a dynamic library",
+            "restrictions": ["Fatal", "Error"]
         },
         {
             "code": "Dlclose",
-            "message": "Failed to release a loaded dynamic library"
+            "message": "Failed to release a loaded dynamic library",
+            "restrictions": ["Fatal", "Error"]
         },
         {
             "code": "UnknowClassFactory",
-            "message": "An unknow class name was given to the factory"
+            "message": "An unknow class name was given to the factory",
+            "restrictions": ["Fatal", "Error", "Warning"]
         },
         {
             "code": "NoLoadedRender",
-            "message": "Wasn't able to load the render library"
+            "message": "Wasn't able to load the render library",
+            "restrictions": ["Fatal", "Error", "Warning"]
         },
         {
             "code": "NoLoadedGraphic",
-            "message": "Wasn't able to load the graphics library"
+            "message": "Wasn't able to load the graphics library",
+            "restrictions": ["Fatal", "Error", "Warning"]
         },
         {
             "code": "InvalidObject",
-            "message": "Invalid object used"
+            "message": "Invalid object used",
+            "restrictions": ["Fatal", "Error", "Warning"]
         },
         {
             "code": "InvalidAction",
-            "message": "Can't execute the given action"
+            "message": "Can't execute the given action",
+            "restrictions": ["Fatal", "Error", "Warning"]
         },
         {
             "code": "FailOpenWindow",
-            "message": "Fail during the creation of the window"
+            "message": "Fail during the creation of the window",
+            "restrictions": ["Fatal", "Error"]
         }
     ]
 }
